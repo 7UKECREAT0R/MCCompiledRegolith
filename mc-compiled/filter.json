@@ -3,7 +3,7 @@
   "filters": [
     {
       "runWith": "exe",
-      "exe": "mc-compiled --regolith"
+      "exe": "mc-compiled"
     }
   ]
 }
