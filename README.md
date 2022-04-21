@@ -1,3 +1,7 @@
+```
+NOTE:  THIS FILTER DOESN'T WORK WITH REGOLITH 0.0.11 OR UNDER!
+```
+
 ### [Main Page](https://github.com/7UKECREAT0R/MCCompiled) - [Source Code](https://github.com/7UKECREAT0R/MCCompiledSource)
 This repository serves as a filter for the [Regolith](https://bedrock-oss.github.io/regolith/) compiler
 
