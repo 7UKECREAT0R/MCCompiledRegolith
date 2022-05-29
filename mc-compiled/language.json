@@ -391,9 +391,10 @@
     "null": {
       "description": "Create/Remove Null Entity",
       "patterns": [
-        [ "id:create", "string:name", "pos:x", "pos:y", "pos:x", "?pos:rotation y", "?pos:rotation x" ],
-        [ "id:remove", "string:name" ],
-        [ "id:removeall" ]
+        [ "id:create", "string:name", "?string:class", "?pos:x", "?pos:y", "?pos:x" ],
+        [ "id:remove", "?string:name", "?string:class" ],
+        [ "id:class", "id:remove" ],
+        [ "id:class", "string:class" ]
       ]
     },
     "tag": {
@@ -431,6 +432,12 @@
       "description": "Define Struct",
       "patterns": [
         [ "id:name" ]
+      ]
+    },
+    "for": {
+      "description": "For Each Entity",
+      "patterns": [
+        [ "selector:entities" ]
       ]
     }
   }
