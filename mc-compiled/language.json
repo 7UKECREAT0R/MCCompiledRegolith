@@ -1,5 +1,5 @@
 {
-  "version": 1.13,
+  "version": 1.14,
   "preprocessor_variables": [
     "compilerversion",
     "minecraftversion",
@@ -31,7 +31,7 @@
     "UNINSTALL": {
       "description": "Uninstall Function",
       "details": "Creates a function that will 'uninstall' the addon from the world; removes tags, scoreboard objectives, dummy entities, etc.",
-      "min-version": 1.1,
+      "min-version": 1.12,
       "value": 8
     }
   },
@@ -50,11 +50,12 @@
     "coord": "TokenCoordinateLiteral",
     "enum": "TokenIdentifierEnum",
     "range": "TokenRangeLiteral",
-    "json": "TokenJSONLiteral"
+    "json": "TokenJSONLiteral",
+    "not": "TokenNot"
   },
   "categories": {
     "preprocessor": "Commands that allow the user to do things at compile time. Preprocessor commands generally start with a $ and are highlighted differently than regular commands.",
-    "text": "Commands which display text to players through FStrings.",
+    "text": "Commands which display text to players through FStrings, or manipulate text otherwise.",
     "entities": "Commands which manipulate, spawn, and transform entities in various ways.",
     "blocks": "Commands which interact with the Minecraft world's blocks.",
     "items": "Commands relating to entity/player items and inventories.",
@@ -73,7 +74,7 @@
       "patterns": [
         [ "id:variable", "object:values" ]
       ],
-      "attributes": [ "DONT_FLATTEN_ARRAYS" ]
+      "attributes": [ "DONT_FLATTEN_ARRAYS", "DONT_DECORATE" ]
     },
     "$inc": {
       "description": "Increment Preprocessor Variable",
@@ -82,7 +83,8 @@
       "function": "_inc",
       "patterns": [
         [ "id:variable" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$dec": {
       "description": "Decrement Preprocessor Variable",
@@ -91,7 +93,8 @@
       "function": "_dec",
       "patterns": [
         [ "id:variable" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$add": {
       "description": "Add to Preprocessor Variable",
@@ -100,7 +103,8 @@
       "function": "_add",
       "patterns": [
         [ "id:variable", "object:values" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$sub": {
       "description": "Subtract from Preprocessor Variable",
@@ -109,7 +113,8 @@
       "function": "_sub",
       "patterns": [
         [ "id:variable", "object:values" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$mul": {
       "description": "Multiply with Preprocessor Variable",
@@ -118,7 +123,8 @@
       "function": "_mul",
       "patterns": [
         [ "id:variable", "object:values" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$div": {
       "description": "Divide Preprocessor Variable",
@@ -127,7 +133,8 @@
       "function": "_div",
       "patterns": [
         [ "id:variable", "object:values" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$mod": {
       "description": "Modulo Preprocessor Variable",
@@ -136,7 +143,8 @@
       "function": "_mod",
       "patterns": [
         [ "id:variable", "object:values" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$pow": {
       "description": "Exponentiate Preprocessor Variable",
@@ -145,7 +153,8 @@
       "function": "_pow",
       "patterns": [
         [ "id:variable", "object:values" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$swap": {
       "description": "Swap Preprocessor Variables",
@@ -154,7 +163,8 @@
       "function": "_swap",
       "patterns": [
         [ "id:a", "id:b" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$if": {
       "description": "Preprocessor If",
@@ -163,13 +173,15 @@
       "function": "_if",
       "patterns": [
         [ "id:a", "compare:comparison", "object:b" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$else": {
       "description": "Preprocessor Else",
       "details": "Directly inverts the result of the last $if call at this level in scope.",
       "category": "preprocessor",
-      "function": "_else"
+      "function": "_else",
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$repeat": {
       "description": "Preprocessor Repeat",
@@ -188,7 +200,8 @@
       "function": "_log",
       "patterns": [
         [ "*:message" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$macro": {
       "description": "Define/Call Macro",
@@ -198,7 +211,7 @@
       "patterns": [
         [ "id:name" ]
       ],
-      "attributes": [ "DONT_EXPAND_PPV" ]
+      "attributes": [ "DONT_EXPAND_PPV", "DONT_DECORATE", "DOCUMENTABLE" ]
     },
     "$include": {
       "description": "Include File",
@@ -207,7 +220,8 @@
       "function": "_include",
       "patterns": [
         [ "string:file" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$strfriendly": {
       "description": "Preprocessor String Friendly Name",
@@ -216,7 +230,8 @@
       "function": "_strfriendly",
       "patterns": [
         [ "id:result", "?id:variable" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$strupper": {
       "description": "Preprocessor String Uppercase",
@@ -225,7 +240,8 @@
       "function": "_strupper",
       "patterns": [
         [ "id:result", "?id:variable" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$strlower": {
       "description": "Preprocessor String Lowercase",
@@ -234,7 +250,8 @@
       "function": "_strlower",
       "patterns": [
         [ "id:result", "?id:variable" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$sum": {
       "description": "Preprocessor Array Sum",
@@ -243,7 +260,8 @@
       "function": "_sum",
       "patterns": [
         [ "id:result", "?id:variable" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$median": {
       "description": "Preprocessor Array Median",
@@ -252,7 +270,8 @@
       "function": "_median",
       "patterns": [
         [ "id:result", "?id:variable" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$mean": {
       "description": "Preprocessor Array Mean",
@@ -261,7 +280,8 @@
       "function": "_mean",
       "patterns": [
         [ "id:result", "?id:variable" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$sort": {
       "description": "Preprocessor Array Sort",
@@ -270,7 +290,8 @@
       "function": "_sort",
       "patterns": [
         [ "id:ascending or descending", "id:variable" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$reverse": {
       "description": "Preprocessor Reverse",
@@ -279,7 +300,8 @@
       "function": "_reverse",
       "patterns": [
         [ "id:variable" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "$iterate": {
       "description": "Iterate Preprocessor Array",
@@ -289,7 +311,7 @@
       "patterns": [
         [ "id:variable", "id:current" ]
       ],
-      "attributes": [ "DONT_FLATTEN_ARRAYS" ]
+      "attributes": [ "DONT_FLATTEN_ARRAYS", "DONT_DECORATE" ]
     },
     "$len": {
       "description": "Preprocessor Length",
@@ -301,7 +323,7 @@
         [ "id:result", "json:array" ],
         [ "id:result", "string:text" ]
       ],
-      "attributes": [ "DONT_FLATTEN_ARRAYS" ]
+      "attributes": [ "DONT_FLATTEN_ARRAYS", "DONT_DECORATE" ]
     },
     "$json": {
       "description": "Preprocessor Load JSON Value",
@@ -311,6 +333,16 @@
       "patterns": [
         [ "string:file name", "id:result", "?string:path" ],
         [ "json:existing json", "id:result", "?string:path" ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
+    },
+    "$call": {
+      "description": "Preprocessor Call Function",
+      "details": "Calls a function by name and passes in the given parameters. Because this is a preprocessor operation, it has the same error handling as a normal function call.",
+      "category": "preprocessor",
+      "function": "_call",
+      "patterns": [
+        [ "string:function name", "?*:parameters" ]
       ]
     },
     "mc": {
@@ -320,7 +352,8 @@
       "category": "other",
       "patterns": [
         [ "string:command" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "globalprint": {
       "description": "Print to All Players",
@@ -341,13 +374,23 @@
       ],
       "attributes": [ "DONT_RESOLVE_STRINGS", "USES_FSTRING" ]
     },
+    "lang": {
+      "description": "Set Active Language",
+      "details": "Sets the active lang file (examples: en_US, pt_BR). Once set, all text will automatically be localized into that lang file; including FStrings.",
+      "category": "text",
+      "patterns": [
+        [ "id:locale" ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
+    },
     "define": {
       "description": "Define Variable",
       "details": "Defines a variable with a name and type, defaulting to int if unspecified. Can be assigned a value directly after defining.",
       "category": "values",
       "patterns": [
         [ "*:args" ]
-      ]
+      ],
+      "attributes": [ "DOCUMENTABLE" ]
     },
     "init": {
       "description": "Initialize Variable",
@@ -363,6 +406,7 @@
       "details": "Allows comparison of variables, along with a huge collection of other criteria. Can be chained together by the keyword 'and' and inverted by the keyword 'not'. Only runs the proceeding statement/code-block for entities where the condition returns true.",
       "category": "logic",
       "patterns": [
+        [ "not:not", "value:boolean" ],
         [ "value:boolean" ],
         [ "value:score", "compare:comparison", "value:other" ],
         [ "selector:check for match" ],
@@ -389,12 +433,17 @@
     "tp": {
       "description": "Teleport Entity",
       "aliases": [ "teleport" ],
-      "details": "Teleports the given entities to a specific position, selector, \"name:type\" of entity, or name of another managed entity (e.g., dummy entities).",
+      "details": "Teleports the executing/given entities to a specific position, selector, \"name:type\" of entity, or name of another managed entity (e.g., dummy entities).",
       "category": "entities",
       "patterns": [
-        [ "selector:source", "coord:x", "coord:y", "coord:z" ],
-        [ "selector:source", "selector:other" ],
-        [ "selector:source", "string:other" ]
+        [ "coord:x", "coord:y", "coord:z", "?id:facing", "?selector:face entity", "?bool:check for blocks" ],
+        [ "coord:x", "coord:y", "coord:z", "?id:facing", "?coord:facing x", "?coord:facing y", "?coord:facing z", "?bool:check for blocks" ],
+        [ "selector:source", "coord:x", "coord:y", "coord:z", "?id:facing", "?selector:face entity", "?bool:check for blocks" ],
+        [ "selector:source", "coord:x", "coord:y", "coord:z", "?id:facing", "?coord:facing x", "?coord:facing y", "?coord:facing z", "?bool:check for blocks" ],
+        [ "selector:source", "selector:other", "?id:facing", "?selector:face entity", "?bool:check for blocks" ],
+        [ "selector:source", "selector:other", "?id:facing", "?coord:facing x", "?coord:facing y", "?coord:facing z", "?bool:check for blocks" ],
+        [ "selector:source", "string:other", "?id:facing", "?selector:face entity", "?bool:check for blocks" ],
+        [ "selector:source", "string:other", "?id:facing", "?coord:facing x", "?coord:facing y", "?coord:facing z", "?bool:check for blocks" ]
       ]
     },
     "move": {
@@ -577,23 +626,23 @@
       ]
     },
     "dummy": {
-      "description": "Create/Remove Dummy Entity",
+      "description": "Manage Dummy Entities",
       "details": "Create a dummy entity, remove the selected ones, or manage the classes on the selected ones. Requires feature 'DUMMIES' to be enabled.",
       "category": "features",
       "features": 1,
       "patterns": [
         [ "id:create", "string:name", "?string:tag", "?coord:x", "?coord:y", "?coord:x" ],
-        [ "id:remove", "string:name", "?string:tag" ],
-        [ "id:class", "id:remove" ],
-        [ "id:class", "string:class" ]
+        [ "id:single", "string:name", "?string:tag", "?coord:x", "?coord:y", "?coord:x" ],
+        [ "id:remove", "string:name", "?string:tag" ]
       ]
     },
     "tag": {
       "description": "Tag Entity",
-      "details": "Adds, removes, or singles out a tag on the given entities.",
+      "details": "Add and remove tags from the given entity.",
       "category": "entities",
       "patterns": [
         [ "selector:target", "id:mode", "string:name" ]
+
       ]
     },
     "explode": {
@@ -611,7 +660,8 @@
       "category": "features",
       "patterns": [
         [ "id:feature name" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
     },
     "function": {
       "description": "Define Function",
@@ -620,7 +670,8 @@
       "category": "logic",
       "patterns": [
         [ "*:args" ]
-      ]
+      ],
+      "attributes": [ "DONT_DECORATE", "DOCUMENTABLE" ]
     },
     "return": {
       "description": "Set Return Value",
