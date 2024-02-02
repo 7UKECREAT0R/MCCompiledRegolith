@@ -1,0 +1,3785 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LanguageServer</name>
+    </assembly>
+    <members>
+        <member name="T:LanguageServer.Client.ClientProxy">
+            <summary>
+            The proxy class for sending messages related to <c>client</c>.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Client.ClientProxy.RegisterCapability(LanguageServer.Parameters.Client.RegistrationParams)">
+            <summary>
+            The <c>client/registerCapability</c> request is sent from the server to the client
+            to register for a new capability on the client side.
+            </summary>
+            <param name="params"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LanguageServer.Client.ClientProxy.UnregisterCapability(LanguageServer.Parameters.Client.UnregistrationParams)">
+            <summary>
+            The <c>client/unregisterCapability</c> request is sent from the server to the client
+            to unregister a previously registered capability.
+            </summary>
+            <param name="params"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LanguageServer.Client.Proxy">
+            <summary>
+            The proxy class for sending messages from the server to the client.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Client.Proxy.#ctor(LanguageServer.Connection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:LanguageServer.Client.Proxy"/>.
+            </summary>
+            <param name="connection"></param>
+        </member>
+        <member name="P:LanguageServer.Client.Proxy.Window">
+            <summary>
+            Gets the proxy object for sending messages related to <c>window</c>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Client.Proxy.Client">
+            <summary>
+            Gets the proxy object for sending messages related to <c>client</c>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Client.Proxy.Workspace">
+            <summary>
+            Gets the proxy object for sending messages related to <c>workspace</c>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Client.Proxy.TextDocument">
+            <summary>
+            Gets the proxy object for sending messages related to <c>textDocument</c>.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Client.TextDocumentProxy">
+            <summary>
+            The proxy class for sending messages related to <c>textDocument</c>.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Client.TextDocumentProxy.PublishDiagnostics(LanguageServer.Parameters.TextDocument.PublishDiagnosticsParams)">
+            <summary>
+            The <c>textDocument/publishDiagnostics</c> notification is sent from the server to the client
+            to signal results of validation runs.
+            </summary>
+            <param name="params"></param>
+        </member>
+        <member name="T:LanguageServer.Client.WindowProxy">
+            <summary>
+            The proxy class for sending messages related to <c>window</c>.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Client.WindowProxy.ShowMessage(LanguageServer.Parameters.Window.ShowMessageParams)">
+            <summary>
+            The <c>window/showMessage</c> notification is sent from the server to the client
+            to ask the client to display a particular message in the user interface.
+            </summary>
+            <param name="params"></param>
+        </member>
+        <member name="M:LanguageServer.Client.WindowProxy.ShowMessageRequest(LanguageServer.Parameters.Window.ShowMessageRequestParams)">
+            <summary>
+            The <c>window/showMessageRequest</c> request is sent from the server to the client
+            to ask the client to display a particular message in the user interface.
+            </summary>
+            <param name="params"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LanguageServer.Client.WindowProxy.LogMessage(LanguageServer.Parameters.Window.LogMessageParams)">
+            <summary>
+            The <c>window/logMessage</c> notification is sent from the server to the client
+            to ask the client to log a particular message.
+            </summary>
+            <param name="params"></param>
+        </member>
+        <member name="M:LanguageServer.Client.WindowProxy.Event(System.Object)">
+            <summary>
+            The <c>telemetry/event</c> notification is sent from the server to the client
+            to ask the client to log a telemetry event.
+            </summary>
+            <param name="params"></param>
+        </member>
+        <member name="T:LanguageServer.Client.WorkspaceProxy">
+            <summary>
+            The proxy class for sending messages related to <c>workspace</c>.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Client.WorkspaceProxy.ApplyEdit(LanguageServer.Parameters.Workspace.ApplyWorkspaceEditParams)">
+            <summary>
+            The <c>workspace/applyEdit</c> request is sent from the server to the client
+            to modify resource on the client side.
+            </summary>
+            <param name="params"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LanguageServer.Client.WorkspaceProxy.WorkspaceFolders">
+            <summary>
+            The <c>workspace/workspaceFolders</c> request is sent from the server to the client
+            to fetch the current open list of workspace folders. 
+            </summary>
+            <returns>
+            Returns <c>null</c> in the response if only a single file is open in the tool.
+            Returns an empty array if a workspace is open but no folders are configured.
+            </returns>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Client.WorkspaceProxy.Configuration(LanguageServer.Parameters.Workspace.ConfigurationParams)">
+            <summary>
+            The <c>workspace/configuration</c> request is sent from the server to the client
+            to fetch configuration settings from the client.
+            The request can fetch n configuration settings in one roundtrip. 
+            </summary>
+            <param name="params">configuration sections asked for</param>
+            <returns>configuration settings</returns>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Infrastructure.JsonDotNet.EitherConverter">
+            <summary>
+            Converts an Either-derived types to and from JSON.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Infrastructure.JsonDotNet.EitherConverter.#ctor">
+            <summary>
+            Initializes a new instance of the EitherConverter class.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Infrastructure.JsonDotNet.EitherConverter.CanConvert(System.Type)">
+            <summary>
+            Determines whether this instance can convert the specified object type.
+            </summary>
+            <param name="objectType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LanguageServer.Infrastructure.JsonDotNet.EitherConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Reads the JSON representation of the object.
+            </summary>
+            <param name="reader"></param>
+            <param name="objectType"></param>
+            <param name="existingValue"></param>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LanguageServer.Infrastructure.JsonDotNet.EitherConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Writes the JSON representation of the object.
+            </summary>
+            <param name="writer"></param>
+            <param name="value"></param>
+            <param name="serializer"></param>
+        </member>
+        <member name="T:LanguageServer.Json.Either">
+            <summary>
+            Mimic discriminated union types
+            </summary>
+            <remarks>
+            <see cref="T:LanguageServer.Json.Serializer"/> must support these derived types below:
+            <list type="bullet">
+            <item><description><see cref="T:LanguageServer.Json.NumberOrString"/></description></item>
+            <item><description><see cref="T:LanguageServer.Parameters.LocationSingleOrArray"/></description></item>
+            <item><description><see cref="T:LanguageServer.Parameters.General.ChangeNotificationsOptions"/></description></item>
+            <item><description><see cref="T:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean"/></description></item>
+            <item><description><see cref="T:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean"/></description></item>
+            <item><description><see cref="T:LanguageServer.Parameters.General.ProviderOptionsOrBoolean"/></description></item>
+            <item><description><see cref="T:LanguageServer.Parameters.General.TextDocumentSync"/></description></item>
+            <item><description><see cref="T:LanguageServer.Parameters.TextDocument.CodeActionResult"/></description></item>
+            <item><description><see cref="T:LanguageServer.Parameters.TextDocument.Documentation"/></description></item>
+            <item><description><see cref="T:LanguageServer.Parameters.TextDocument.CompletionResult"/></description></item>
+            <item><description><see cref="T:LanguageServer.Parameters.TextDocument.DocumentSymbolResult"/></description></item>
+            <item><description><see cref="T:LanguageServer.Parameters.TextDocument.HoverContents"/></description></item>
+            </list>
+            </remarks>
+        </member>
+        <member name="T:LanguageServer.Parameters.Client.CodeLensRegistrationOptions">
+            <summary>
+            For <c>client/registerCapability</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.Client.CompletionRegistrationOptions">
+            <summary>
+            For <c>client/registerCapability</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.Client.DocumentFilter">
+            <summary>
+            For <c>client/registerCapability</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.Client.DocumentLinkRegistrationOptions">
+            <summary>
+            For <c>client/registerCapability</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.Client.DocumentOnTypeFormattingRegistrationOptions">
+            <summary>
+            For <c>client/registerCapability</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.Client.IdGenerator">
+            <summary>
+            The id generator class for request messages from the server to the client.
+            </summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.Client.IdGenerator.Instance">
+            <summary>
+            The globally shared instance of <see cref="T:LanguageServer.Parameters.Client.IdGenerator"/>.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Parameters.Client.IdGenerator.#ctor">
+            <summary>
+            Initializes a new instance of <see cref="T:LanguageServer.Parameters.Client.IdGenerator"/>.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Parameters.Client.IdGenerator.#ctor(System.Int64)">
+            <summary>
+            Initializes a new instance of <see cref="T:LanguageServer.Parameters.Client.IdGenerator"/> with the specified initial value.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Parameters.Client.IdGenerator.Next">
+            <summary>
+            Returns an id and increments the internal value.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:LanguageServer.Parameters.Client.SignatureHelpRegistrationOptions">
+            <summary>
+            For <c>client/registerCapability</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.Client.TextDocumentChangeRegistrationOptions">
+            <summary>
+            For <c>client/registerCapability</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.Client.TextDocumentRegistrationOptions">
+            <summary>
+            For <c>initialize</c> and <c>client/registerCapability</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.Client.TextDocumentSaveRegistrationOptions">
+            <summary>
+            For <c>client/registerCapability</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.CodeActionKind">
+            <summery>
+            A set of predefined code action kinds
+            </summery>
+            <seealso cref="P:LanguageServer.Parameters.General.CodeActionKindCapabilities.valueSet"/>
+            <seealso cref="P:LanguageServer.Parameters.TextDocument.CodeActionContext.only"/>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.CodeActionKind.QuickFix">
+            <summary>
+            Base kind for quickfix actions: 'quickfix'
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.CodeActionKind.Refactor">
+            <summary>
+            Base kind for refactoring actions: 'refactor'
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.CodeActionKind.RefactorExtract">
+            <summary>
+            Base kind for refactoring extraction actions: 'refactor.extract'
+            </summary>
+            <example>
+            Example extract actions:
+            <list type="bullet">
+            <item><description>Extract method</description></item>
+            <item><description>Extract function</description></item>
+            <item><description>Extract variable</description></item>
+            <item><description>Extract interface from class</description></item>
+            <item><description>...</description></item>
+            </list>
+            </example>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.CodeActionKind.RefactorInline">
+            <summary>
+            Base kind for refactoring inline actions: 'refactor.inline'
+            </summary>
+            <example>
+            Example inline actions:
+            <list type="bullet">
+            <item><description>Inline function</description></item>
+            <item><description>Inline variable</description></item>
+            <item><description>Inline constant</description></item>
+            <item><description>...</description></item>
+            </list>
+            </example>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.CodeActionKind.RefactorRewrite">
+            <summary>
+            Base kind for refactoring rewrite actions: 'refactor.rewrite'
+            </summary>
+            <example>
+            Example rewrite actions:
+            <list type="bullet">
+            <item><description>Convert JavaScript function to class</description></item>
+            <item><description>Add or remove parameter</description></item>
+            <item><description>Encapsulate field</description></item>
+            <item><description>Make method static</description></item>
+            <item><description>Move method to base class</description></item>
+            <item><description>...</description></item>
+            </list>
+            </example>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.CodeActionKind.Source">
+            <summary>
+            Base kind for source actions: 'source'
+            </summary>
+            <remarks>
+            Source code actions apply to the entire file.
+            </remarks>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.CodeActionKind.SourceOrganizeImports">
+            <summary>
+            Base kind for an organize imports source action: 'source.organizeImports'
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.FoldingRangeKind">
+            <summary>
+            Enum of known range kinds
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.FoldingRangeKind.Comment">
+            <summary>
+            Folding range for a comment
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.FoldingRangeKind.Imports">
+            <summary>
+            Folding range for a imports or includes
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.FoldingRangeKind.Region">
+            <summary>
+            Folding range for a region (e.g. <c>#region</c>)
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.CancelParams">
+            <summary>
+            For <c>$/cancelRequest</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CancelParams.id">
+            <summary>
+            The request id to cancel.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.ChangeNotificationsOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ChangeNotificationsOptions.op_Implicit(System.String)~LanguageServer.Parameters.General.ChangeNotificationsOptions">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:System.String"/> to a <see cref="T:LanguageServer.Parameters.General.ChangeNotificationsOptions"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ChangeNotificationsOptions.op_Implicit(System.Boolean)~LanguageServer.Parameters.General.ChangeNotificationsOptions">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:System.Boolean"/> to a <see cref="T:LanguageServer.Parameters.General.ChangeNotificationsOptions"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ChangeNotificationsOptions.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of <c>ChangeNotificationsOptions</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ChangeNotificationsOptions.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of <c>ChangeNotificationsOptions</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.ClientCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ClientCapabilities.workspace">
+            <summary>
+            Workspace specific client capabilities.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ClientCapabilities.textDocument">
+            <summary>
+            Text document specific client capabilities.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ClientCapabilities.experimental">
+            <summary>
+            Experimental client capabilities.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.CodeActionCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CodeActionCapabilities.codeActionLiteralSupport">
+            <summary>
+            The client support code action literals as a valid
+            response of the `textDocument/codeAction` request.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.CodeActionKindCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CodeActionKindCapabilities.valueSet">
+            <summary>
+            The code action kind values the client supports.
+            </summary>
+            <remarks>
+            When this property exists the client also guarantees that it will
+            handle values outside its set gracefully and falls back
+            to a default value when unknown.
+            </remarks>
+            <value>
+            See <see cref="T:LanguageServer.Parameters.CodeActionKind"/> for an enumeration of standardized kinds.
+            </value>
+            <seealso>Spec 3.8.0</seealso>
+            <seealso cref="T:LanguageServer.Parameters.CodeActionKind"/>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.CodeActionLiteralSupportCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CodeActionLiteralSupportCapabilities.codeActionKind">
+            <summary>
+            The code action kind is support with the following value set.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.ColorProviderOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            The original spec describes the intersection type
+            <c>(ColorProviderOptions &amp; TextDocumentRegistrationOptions &amp; StaticRegistrationOptions)</c>.
+            This implementation merges their types into this class.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            The original spec describes the union type of
+            <c>boolean</c>, <c>ColorProviderOptions</c>, or the intersection type
+            <c>(ColorProviderOptions &amp; TextDocumentRegistrationOptions &amp; StaticRegistrationOptions)</c>.
+            This implementation defines <see cref="P:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.ColorProviderOptions"/> class instead of the intersection type.
+            </remarks>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.op_Implicit(LanguageServer.Parameters.General.ColorProviderOptions)~LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean">
+            <summary>
+            Defines an implicit conversion of a <see cref="P:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.ColorProviderOptions"/> to a <see cref="T:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.op_Implicit(System.Boolean)~LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:System.Boolean"/> to a <see cref="T:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.#ctor(LanguageServer.Parameters.General.ColorProviderOptions)">
+            <summary>
+            Initializes a new instance of <c>ColorProviderOptionsOrBoolean</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of <c>ColorProviderOptionsOrBoolean</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.IsColorProviderOptions">
+            <summary>
+            Returns true if its underlying value is a <see cref="P:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.ColorProviderOptions"/>.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.IsBoolean">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:System.Boolean"/>.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.ColorProviderOptions">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="P:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.ColorProviderOptions"/>.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean.Boolean">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:System.Boolean"/>.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.CompletionCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CompletionCapabilities.completionItem">
+            <summary>
+            The client supports the following <c>CompletionItem</c> specific capabilities.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CompletionCapabilities.completionItemKind">
+            <summary>
+            The completion item kind values the client supports.
+            </summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CompletionCapabilities.contextSupport">
+            <summary>
+            The client supports to send additional context information for a
+            <c>textDocument/completion</c> request.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.CompletionItemCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.9.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CompletionItemCapabilities.snippetSupport">
+            <summary>
+            Client supports snippets as insert text.
+            </summary>
+            <remarks>
+            A snippet can define tab stops and placeholders with <c>$1</c>, <c>$2</c>
+            and <c>${3:foo}</c>. <c>$0</c> defines the final tab stop, it defaults to
+            the end of the snippet. Placeholders with equal identifiers are linked,
+            that is typing in one will update others too.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CompletionItemCapabilities.commitCharactersSupport">
+            <summary>
+            Client supports commit characters on a completion item.
+            </summary>
+            <seealso>Spec 3.2.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CompletionItemCapabilities.documentationFormat">
+            <summary>
+            Client supports the follow content formats for the documentation
+            property.The order describes the preferred format of the client.
+            </summary>
+            <value>
+            See <see cref="T:LanguageServer.Parameters.MarkupKind"/> for an enumeration of standardized kinds.
+            </value>
+            <seealso>Spec 3.3.0</seealso>
+            <seealso cref="T:LanguageServer.Parameters.MarkupKind"/>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CompletionItemCapabilities.deprecatedSupport">
+            <summary>
+            Client supports the deprecated property on a completion item.
+            </summary>
+            <seealso>Spec 3.7.2</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CompletionItemCapabilities.preselectSupport">
+            <summary>
+            Client supports the preselect property on a completion item.
+            </summary>
+            <seealso>Spec 3.9.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.CompletionItemKindCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CompletionItemKindCapabilities.valueSet">
+            <summary>
+            The completion item kind values the client supports.
+            </summary>
+            <remarks>
+            <para>
+            When this
+            property exists the client also guarantees that it will
+            handle values outside its set gracefully and falls back
+            to a default value when unknown.
+            </para>
+            <para>
+            If this property is not present the client only supports
+            the completion items kinds from <c>Text</c> to <c>Reference</c> as defined in
+            the initial version of the protocol.
+            </para>
+            </remarks>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.EditCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.EditCapabilities.documentChanges">
+            <summary>
+            The client supports versioned document changes in <c>WorkspaceEdit</c>s
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.FoldingRangeCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            <c>dynamicRegistration</c> property shows whether implementation supports dynamic registration.
+            If this is set to <c>true</c> the client supports the new
+            <c>(FoldingRangeProviderOptions &amp; TextDocumentRegistrationOptions &amp; StaticRegistrationOptions)</c>
+            return value for the corresponding server capability as well.
+            </remarks>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.FoldingRangeCapabilities.rangeLimit">
+            <summary>
+            The maximum number of folding ranges that the client prefers to receive per document.
+            </summary>
+            <remarks>
+            The value serves as a hint, servers are free to follow the limit.
+            </remarks>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.FoldingRangeCapabilities.lineFoldingOnly">
+            <summary>
+            If set, the client signals that it only supports folding complete lines.
+            </summary>
+            <remarks>
+            If set, client will ignore specified <c>startCharacter</c>
+            and <c>endCharacter</c> properties in a FoldingRange.
+            </remarks>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.FoldingRangeProviderOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            The original spec describes the intersection type
+            <c>(FoldingRangeProviderOptions &amp; TextDocumentRegistrationOptions &amp; StaticRegistrationOptions)</c>.
+            This implementation merges their types into this class.
+            </remarks>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            The original spec describes the union type of
+            <c>boolean</c>, <c>FoldingRangeProviderOptions</c>, or the intersection type
+            <c>(FoldingRangeProviderOptions &amp; TextDocumentRegistrationOptions &amp; StaticRegistrationOptions)</c>.
+            This implementation defines <see cref="P:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.FoldingRangeProviderOptions"/> class instead of the intersection type.
+            </remarks>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.op_Implicit(LanguageServer.Parameters.General.FoldingRangeProviderOptions)~LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean">
+            <summary>
+            Defines an implicit conversion of a <see cref="P:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.FoldingRangeProviderOptions"/> to a <see cref="T:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.op_Implicit(System.Boolean)~LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:System.Boolean"/> to a <see cref="T:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.#ctor(LanguageServer.Parameters.General.FoldingRangeProviderOptions)">
+            <summary>
+            Initializes a new instance of <c>FoldingRangeProviderOptionsOrBoolean</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of <c>FoldingRangeProviderOptionsOrBoolean</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.IsFoldingRangeProviderOptions">
+            <summary>
+            Returns true if its underlying value is a <see cref="P:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.FoldingRangeProviderOptions"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.IsBoolean">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:System.Boolean"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.FoldingRangeProviderOptions">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="P:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.FoldingRangeProviderOptions"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.FoldingRangeProviderOptionsOrBoolean.Boolean">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:System.Boolean"/>.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.HoverCapabilities">
+            <summary>
+            For <c>initialize</c>.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.HoverCapabilities.contentFormat">
+            <summary>
+            Client supports the follow content formats for the content property.
+            </summary>
+            <remarks>
+            The order describes the preferred format of the client.
+            </remarks>
+            <value>
+            See <see cref="T:LanguageServer.Parameters.MarkupKind"/> for an enumeration of standardized kinds.
+            </value>
+            <seealso>Spec 3.3.0</seealso>
+            <seealso cref="T:LanguageServer.Parameters.MarkupKind"/>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.InitializeErrorData">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.InitializeErrorData.retry">
+            <summary>
+            Indicates whether the client execute the following retry logic.
+            </summary>
+            <remarks>
+            <list type="number">
+            <item><description>show the message provided by the <c>ResponseError</c> to the user</description></item>
+            <item><description>user selects retry or cancel</description></item>
+            <item><description>if user selected retry the initialize method is sent again</description></item>
+            </list>
+            </remarks>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.InitializeParams">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.InitializeParams.processId">
+            <summary>
+            The process Id of the parent process that started the server.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.InitializeParams.rootUri">
+            <summary>
+            The rootUri of the workspace.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.InitializeParams.initializationOptions">
+            <summary>
+            User provided initialization options.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.InitializeParams.capabilities">
+            <summary>
+            The capabilities provided by the client (editor or tool)
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.InitializeParams.trace">
+            <summary>
+            The initial trace setting.
+            </summary>
+            <remarks>
+            If omitted trace is disabled ('off').
+            </remarks>
+            <value>
+            See <see cref="T:LanguageServer.Parameters.TraceKind"/> for an enumeration of standardized kinds.
+            </value>
+            <seealso cref="T:LanguageServer.Parameters.TraceKind"/>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.InitializeParams.workspaceFolders">
+            <summary>
+            The workspace folders configured in the client when the server starts.
+            </summary>
+            <remarks>
+            This property is only available if the client supports workspace folders.
+            It can be <c>null</c> if the client supports workspace folders but none are
+            configured.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.InitializeResult">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.InitializeResult.capabilities">
+            <summary>
+            The capabilities the language server provides.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.TextDocumentSyncOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            a detailed structure defining each notification.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentSyncOptions.openClose">
+            <summary>
+            Open and close notifications are sent to the server.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentSyncOptions.change">
+            <summary>
+            Change notifications are sent to the server.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentSyncOptions.willSave">
+            <summary>
+            Will save notifications are sent to the server.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentSyncOptions.willSaveWaitUntil">
+            <summary>
+            Will save wait until requests are sent to the server.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentSyncOptions.save">
+            <summary>
+            Save notifications are sent to the server.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.SaveOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            Save options.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.SaveOptions.includeText">
+            <summary>
+            The client is supposed to include the content on save.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.CompletionOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            Completion options.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CompletionOptions.resolveProvider">
+            <summary>
+            The server provides support to resolve additional information for a completion item.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CompletionOptions.triggerCharacters">
+            <summary>
+            The characters that trigger completion automatically.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.SignatureHelpOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            Signature help options.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.SignatureHelpOptions.triggerCharacters">
+            <summary>
+            The characters that trigger signature help automatically.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.CodeLensOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            Code Lens options.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.CodeLensOptions.resolveProvider">
+            <summary>
+            Code lens has a resolve provider as well.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.DocumentOnTypeFormattingOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            Format document on type options.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.DocumentOnTypeFormattingOptions.firstTriggerCharacter">
+            <summary>
+            A character on which formatting should be triggered, like <c>}</c>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.DocumentOnTypeFormattingOptions.moreTriggerCharacter">
+            <summary>
+            More trigger characters.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.DocumentLinkOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            Document link options.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.DocumentLinkOptions.resolveProvider">
+            <summary>
+            Document links have a resolve provider as well.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.ExecuteCommandOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            Execute command options.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ExecuteCommandOptions.commands">
+            <summary>
+            The commands to be executed on the server
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.ProviderOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            The original spec describes the intersection type
+            <c>(TextDocumentRegistrationOptions &amp; StaticRegistrationOptions)</c>.
+            This implementation merges their types into this class.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ProviderOptions.documentSelector">
+            <summary>
+            A document selector to identify the scope of the registration. If set to null
+            the document selector provided on the client side will be used.
+            </summary>
+            <remarks>
+            Merged from <see cref="T:LanguageServer.Parameters.Client.TextDocumentRegistrationOptions"/>.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ProviderOptions.id">
+            <summary>
+            The id used to register the request. The id can be used to deregister
+            the request again.
+            </summary>
+            <remarks>
+            Merged from <c>StaticRegistrationOptions</c>.
+            </remarks>
+            <seealso cref="P:LanguageServer.Parameters.Client.Registration.id"/>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.ProviderOptionsOrBoolean">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            The original spec describes the union type of <c>boolean</c> or the intersection type
+            <c>(TextDocumentRegistrationOptions &amp; StaticRegistrationOptions)</c>.
+            This implementation defines <see cref="P:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.ProviderOptions"/> class instead of the intersection type.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.op_Implicit(LanguageServer.Parameters.General.ProviderOptions)~LanguageServer.Parameters.General.ProviderOptionsOrBoolean">
+            <summary>
+            Defines an implicit conversion of a <see cref="P:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.ProviderOptions"/> to a <see cref="T:LanguageServer.Parameters.General.ProviderOptionsOrBoolean"/>
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.op_Implicit(System.Boolean)~LanguageServer.Parameters.General.ProviderOptionsOrBoolean">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:System.Boolean"/> to a <see cref="T:LanguageServer.Parameters.General.ProviderOptionsOrBoolean"/>
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.#ctor(LanguageServer.Parameters.General.ProviderOptions)">
+            <summary>
+            Initializes a new instance of <c>ProviderOptionsOrBoolean</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of <c>ProviderOptionsOrBoolean</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.IsProviderOptions">
+            <summary>
+            Returns true if its underlying value is a <see cref="P:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.ProviderOptions"/>.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.IsBoolean">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:System.Boolean"/>.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.ProviderOptions">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="P:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.ProviderOptions"/>.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ProviderOptionsOrBoolean.Boolean">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:System.Boolean"/>.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.PublishDiagnosticsCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.7.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.PublishDiagnosticsCapabilities.relatedInformation">
+            <summary>
+            Whether the clients accepts diagnostics with related information.
+            </summary>
+            <seealso>Spec 3.7.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.RegistrationCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.RegistrationCapabilities.dynamicRegistration">
+            <summary>
+            Whether the client supports dynamic registration.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.ServerCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.textDocumentSync">
+            <summary>
+            Defines how text documents are synced.
+            </summary>
+            <remarks>
+            <para>
+            Is either a detailed structure defining each notification or
+            for backwards compatibility the <c>TextDocumentSyncKind</c> number.
+            </para>
+            <para>
+            If omitted it defaults to <c>TextDocumentSyncKind.None</c>.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.hoverProvider">
+            <summary>
+            The server provides hover support.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.completionProvider">
+            <summary>
+            The server provides completion support.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.signatureHelpProvider">
+            <summary>
+            The server provides signature help support.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.definitionProvider">
+            <summary>
+            The server provides goto definition support.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.typeDefinitionProvider">
+            <summary>
+            The server provides Goto Type Definition support.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.implementationProvider">
+            <summary>
+            The server provides Goto Implementation support.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.referencesProvider">
+            <summary>
+            The server provides find references support.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.documentHighlightProvider">
+            <summary>
+            The server provides document highlight support.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.documentSymbolProvider">
+            <summary>
+            The server provides document symbol support.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.workspaceSymbolProvider">
+            <summary>
+            The server provides workspace symbol support.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.codeActionProvider">
+            <summary>
+            The server provides code actions.
+            </summary>
+            <remarks>
+            The <c>CodeActionOptions</c> return type (since version 3.11.0) is only
+            valid if the client signals code action literal support via the property
+            <c>textDocument.codeAction.codeActionLiteralSupport</c>.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.codeLensProvider">
+            <summary>
+            The server provides code lens.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.documentFormattingProvider">
+            <summary>
+            The server provides document formatting.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.documentRangeFormattingProvider">
+            <summary>
+            The server provides document range formatting.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.documentOnTypeFormattingProvider">
+            <summary>
+            The server provides document formatting on typing.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.renameProvider">
+            <summary>
+            The server provides rename support.
+            </summary>
+            <remarks>
+            RenameOptions may only be specified if the client states that it supports
+            <c>prepareSupport</c> in its initial <c>initialize</c> request.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.documentLinkProvider">
+            <summary>
+            The server provides document link support.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.colorProvider">
+            <summary>
+            The server provides color provider support.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.foldingRangeProvider">
+            <summary>
+            The server provides folding provider support.
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.executeCommandProvider">
+            <summary>
+            The server provides execute command support.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.workspace">
+            <summary>
+            Workspace specific server capabilities
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.ServerCapabilities.experimental">
+            <summary>
+            Experimental server capabilities.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.SignatureHelpCapabilities">
+            <summary>
+            For <c>initialize</c>.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.SignatureHelpCapabilities.signatureInformation">
+            <summary>
+            The client supports the following <c>SignatureInformation</c> specific properties.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.SignatureInformationCapabilities">
+            <summary>
+            For <c>initialize</c>.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.SignatureInformationCapabilities.documentationFormat">
+            <summary>
+            Client supports the follow content formats for the documentation property.
+            </summary>
+            <remarks>
+            The order describes the preferred format of the client.
+            </remarks>
+            <value>
+            See <see cref="T:LanguageServer.Parameters.MarkupKind"/> for an enumeration of standardized kinds.
+            </value>
+            <seealso>Spec 3.3.0</seealso>
+            <seealso cref="T:LanguageServer.Parameters.MarkupKind"/>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.SymbolCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            Capabilities specific to the <c>workspace/symbol</c> request.
+            </remarks>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.SymbolCapabilities.symbolKind">
+            <summary>
+            Specific capabilities for the <c>SymbolKind</c> in the <c>workspace/symbol</c> request.
+            </summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.SymbolCapabilities.hierarchicalDocumentSymbolSupport">
+            <summary>
+            The client support hierarchical document symbols.
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.SymbolKindCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <remarks>
+            Specific capabilities for the <c>SymbolKind</c> in the <c>workspace/symbol</c> request.
+            </remarks>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.SymbolKindCapabilities.valueSet">
+            <summary>
+            The symbol kind values the client supports.
+            </summary>
+            <remarks>
+            <para>
+            When this property exists the client also guarantees that it will
+            handle values outside its set gracefully and falls back
+            to a default value when unknown.
+            </para>
+            <para>
+            If this property is not present the client only supports
+            the symbol kinds from <c>File</c> to <c>Array</c> as defined in
+            the initial version of the protocol.
+            </para>
+            </remarks>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.SynchronizationCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.SynchronizationCapabilities.willSave">
+            <summary>
+            The client supports sending will save notifications.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.SynchronizationCapabilities.willSaveWaitUntil">
+            <summary>
+            The client supports sending a will save request and
+            waits for a response providing text edits which will
+            be applied to the document before it is saved.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.SynchronizationCapabilities.didSave">
+            <summary>
+            The client supports did save notifications.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.synchronization">
+            <summary>
+            Capabilities specific to text document synchronization,
+            such as <c>textDocument/willSave</c>, <c>textDocument/didSave</c>, etc
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.completion">
+            <summary>
+            Capabilities specific to the <c>textDocument/completion</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.hover">
+            <summary>
+            Capabilities specific to the <c>textDocument/hover</c>
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.signatureHelp">
+            <summary>
+            Capabilities specific to the <c>textDocument/signatureHelp</c>
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.references">
+            <summary>
+            Capabilities specific to the <c>textDocument/references</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.documentHighlight">
+            <summary>
+            Capabilities specific to the <c>textDocument/documentHighlight</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.documentSymbol">
+            <summary>
+            Capabilities specific to the <c>textDocument/documentSymbol</c>
+            </summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.formatting">
+            <summary>
+            Capabilities specific to the <c>textDocument/formatting</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.rangeFormatting">
+            <summary>
+            Capabilities specific to the <c>textDocument/rangeFormatting</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.onTypeFormatting">
+            <summary>
+            Capabilities specific to the <c>textDocument/onTypeFormatting</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.definition">
+            <summary>
+            Capabilities specific to the <c>textDocument/definition</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.typeDefinition">
+            <summary>
+            Capabilities specific to the <c>textDocument/typeDefinition</c>
+            </summary>
+            <seealso cref="T:LanguageServer.Parameters.General.ProviderOptions"/>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.implementation">
+            <summary>
+            Capabilities specific to the <c>textDocument/implementation</c>.
+            </summary>
+            <seealso cref="T:LanguageServer.Parameters.General.ProviderOptions"/>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.codeAction">
+            <summary>
+            Capabilities specific to the <c>textDocument/codeAction</c>.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.codeLens">
+            <summary>
+            Capabilities specific to the <c>textDocument/codeLens</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.documentLink">
+            <summary>
+            Capabilities specific to the <c>textDocument/documentLink</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.colorProvider">
+            <summary>
+            Capabilities specific to the <c>textDocument/documentColor</c> and the
+            <c>textDocument/colorPresentation</c> request.
+            </summary>
+            <remarks>
+            <c>dynamicRegistration</c> property shows whether colorProvider supports dynamic registration.
+            If this is set to <c>true</c> the client supports the new
+            <c>(ColorProviderOptions &amp; TextDocumentRegistrationOptions &amp; StaticRegistrationOptions)</c>
+            return value for the corresponding server capability as well.
+            </remarks>
+            <seealso cref="T:LanguageServer.Parameters.General.ColorProviderOptions"/>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.rename">
+            <summary>
+            Capabilities specific to the <c>textDocument/rename</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.publishDiagnostics">
+            <summary>
+            Capabilities specific to <c>textDocument/publishDiagnostics</c>.
+            </summary>
+            <seealso>Spec 3.7.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentClientCapabilities.foldingRange">
+            <summary>
+            Capabilities specific to <c>textDocument/foldingRange</c> requests.
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.TextDocumentSync">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.TextDocumentSync.op_Implicit(LanguageServer.Parameters.General.TextDocumentSyncKind)~LanguageServer.Parameters.General.TextDocumentSync">
+            <summary>
+            Defines an implicit conversion of a <see cref="P:LanguageServer.Parameters.General.TextDocumentSync.TextDocumentSyncKind"/> to a <see cref="T:LanguageServer.Parameters.General.TextDocumentSync"/>
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.TextDocumentSync.op_Implicit(LanguageServer.Parameters.General.TextDocumentSyncOptions)~LanguageServer.Parameters.General.TextDocumentSync">
+            <summary>
+            Defines an implicit conversion of a <see cref="P:LanguageServer.Parameters.General.TextDocumentSync.TextDocumentSyncOptions"/> to a <see cref="T:LanguageServer.Parameters.General.TextDocumentSync"/>
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.TextDocumentSync.#ctor(LanguageServer.Parameters.General.TextDocumentSyncKind)">
+            <summary>
+            Initializes a new instance of <c>TextDocumentSync</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.General.TextDocumentSync.#ctor(LanguageServer.Parameters.General.TextDocumentSyncOptions)">
+            <summary>
+            Initializes a new instance of <c>TextDocumentSync</c>  with the specified value.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentSync.IsTextDocumentSyncKind">
+            <summary>
+            Returns true if its underlying value is a <see cref="P:LanguageServer.Parameters.General.TextDocumentSync.TextDocumentSyncKind"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentSync.IsTextDocumentSyncOptions">
+            <summary>
+            Returns true if its underlying value is a <see cref="P:LanguageServer.Parameters.General.TextDocumentSync.TextDocumentSyncOptions"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentSync.TextDocumentSyncKind">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="P:LanguageServer.Parameters.General.TextDocumentSync.TextDocumentSyncKind"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.TextDocumentSync.TextDocumentSyncOptions">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="P:LanguageServer.Parameters.General.TextDocumentSync.TextDocumentSyncOptions"/>.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.TextDocumentSyncKind">
+            <summary>
+            For <c>initialize</c> and <c>textDocument/didChange</c>
+            </summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.General.TextDocumentSyncKind.None">
+            <summary>
+            Documents should not be synced at all.
+            </summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.General.TextDocumentSyncKind.Full">
+            <summary>
+            Documents are synced by always sending the full content of the document.
+            </summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.General.TextDocumentSyncKind.Incremental">
+            <summary>
+            Documents are synced by sending the full content on open.
+            </summary>
+            <remarks>
+            After that only incremental updates to the document are send.
+            </remarks>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.WorkspaceClientCapabilities">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.WorkspaceClientCapabilities.applyEdit">
+            <summary>
+            The client supports applying batch edits to the workspace by supporting
+            the request <c>workspace/applyEdit</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.WorkspaceClientCapabilities.workspaceEdit">
+            <summary>
+            Capabilities specific to <c>WorkspaceEdit</c>s
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.WorkspaceClientCapabilities.didChangeConfiguration">
+            <summary>
+            Capabilities specific to the <c>workspace/didChangeConfiguration</c> notification.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.WorkspaceClientCapabilities.didChangeWatchedFiles">
+            <summary>
+            Capabilities specific to the <c>workspace/didChangeWatchedFiles</c> notification.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.WorkspaceClientCapabilities.symbol">
+            <summary>
+            Capabilities specific to the <c>workspace/symbol</c> request.
+            </summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.WorkspaceClientCapabilities.executeCommand">
+            <summary>
+            Capabilities specific to the <c>workspace/executeCommand</c> request.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.WorkspaceClientCapabilities.workspaceFolders">
+            <summary>
+            The client has support for workspace folders.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.WorkspaceClientCapabilities.configuration">
+            <summary>
+            The client supports <c>workspace/configuration</c> requests.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.WorkspaceFoldersOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.WorkspaceFoldersOptions.supported">
+            <summary>
+            The server has support for workspace folders
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.WorkspaceFoldersOptions.changeNotifications">
+            <summary>
+            Whether the server wants to receive workspace folder change notifications.
+            </summary>
+            <remarks>
+            If a strings is provided the string is treated as a ID
+            under which the notification is registered on the client
+            side.The ID can be used to unregister for these events
+            using the <c>client/unregisterCapability</c> request.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.General.WorkspaceOptions">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.General.WorkspaceOptions.workspaceFolders">
+            <summary>
+            The server supports workspace folder.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.Location">
+            <summary>
+            For <c>workspace/symbol</c>,
+            <c>textDocument/documentSymbol</c>,
+            <c>textDocument/references</c>,
+            <c>textDocument/definition</c>, and
+            <c>workspace/symbol</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.MarkupKind">
+            <summary>
+            Describes the content type that a client supports in various result literals
+            like <c>Hover</c>, <c>ParameterInfo</c> or <c>CompletionItem</c>.
+            </summary>
+            <remarks>
+            Please note that <c>MarkupKind</c>s must not start with a <c>$</c>.
+            This kinds are reserved for internal usage.
+            </remarks>
+            <seealso cref="P:LanguageServer.Parameters.General.CompletionItemCapabilities.documentationFormat"/>
+            <seealso cref="P:LanguageServer.Parameters.General.HoverCapabilities.contentFormat"/>
+            <seealso cref="P:LanguageServer.Parameters.General.SignatureInformationCapabilities.documentationFormat"/>
+            <seealso cref="P:LanguageServer.Parameters.TextDocument.MarkupContent.kind"/>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.MarkupKind.PlainText">
+            <summary>
+            Plain text is supported as a content format
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.MarkupKind.Markdown">
+            <summary>
+            Markdown is supported as a content format
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.Position">
+            <summary>
+            For <c>textDocument/didChange</c>,
+            <c>textDocument/willSaveWaitUntil</c>,
+            <c>textDocument/completion</c>,
+            <c>textDocument/hover</c>,
+            <c>textDocument/signatureHelp</c>,
+            <c>textDocument/references</c>,
+            <c>textDocument/documentHighlight</c>,
+            <c>textDocument/formatting</c>,
+            <c>textDocument/rangeFormatting</c>,
+            <c>textDocument/onTypeFormatting</c>,
+            <c>textDocument/definition</c>,
+            <c>textDocument/codeAction</c>,
+            <c>textDocument/codeLens</c>,
+            <c>textDocument/documentLink</c>,
+            <c>textDocument/rename</c>,
+            <c>textDocument/publishDiagnostics</c>,
+            <c>documentLink/resolve</c>,
+            <c>workspace/applyEdit</c>, and
+            <c>workspace/symbol</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.Range">
+            <summary>
+            For <c>textDocument/didChange</c>,
+            <c>textDocument/willSaveWaitUntil</c>,
+            <c>textDocument/completion</c>,
+            <c>textDocument/hover</c>,
+            <c>textDocument/references</c>,
+            <c>textDocument/documentHighlight</c>,
+            <c>textDocument/formatting</c>,
+            <c>textDocument/rangeFormatting</c>,
+            <c>textDocument/codeAction</c>,
+            <c>textDocument/codeLens</c>,
+            <c>textDocument/documentLink</c>,
+            <c>textDocument/publishDiagnostics</c>,
+            <c>documentLink/resolve</c>,
+            <c>workspace/applyEdit</c>, and
+            <c>workspace/symbol</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.SymbolInformation">
+            <summary>
+            For <c>textDocument/documentSymbol</c> and <c>workspace/symbol</c>
+            </summary>
+            <seealso>Spec 3.7.2</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.SymbolInformation.name">
+            <summary>
+            The name of this symbol.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.SymbolInformation.kind">
+            <summary>
+            The kind of this symbol.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.SymbolInformation.deprecated">
+            <summary>
+            Indicates if this symbol is deprecated.
+            </summary>
+            <seealso>Spec 3.7.2</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.SymbolInformation.location">
+            <summary>
+            The location of this symbol.
+            </summary>
+            <remarks>
+            The location's range is used by a tool
+            to reveal the location in the editor.If the symbol is selected in the
+            tool the range's start information is used to position the cursor. So
+            the range usually spans more then the actual symbol's name and does
+            normally include things like visibility modifiers.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.SymbolInformation.containerName">
+            <summary>
+            The name of the symbol containing this symbol.
+            </summary>
+            <remarks>
+            This information is for
+            user interface purposes (e.g.to render a qualifier in the user interface
+            if necessary). It can't be used to re-infer a hierarchy for the document
+            symbols.
+            </remarks>
+        </member>
+        <member name="T:LanguageServer.Parameters.SymbolKind">
+            <summary>
+            For <c>textDocument/documentSymbol</c> and <c>workspace/symbol</c>
+            </summary>
+            <remarks>
+            A symbol kind.
+            </remarks>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.File">
+            <summary>File</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Module">
+            <summary>Module</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Namespace">
+            <summary>Namespace</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Package">
+            <summary>Package</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Class">
+            <summary>Class</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Method">
+            <summary>Method</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Property">
+            <summary>Property</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Field">
+            <summary>Field</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Constructor">
+            <summary>Constructor</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Enum">
+            <summary>Enum</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Interface">
+            <summary>Interface</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Function">
+            <summary>Function</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Variable">
+            <summary>Variable</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Constant">
+            <summary>Constant</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.String">
+            <summary>String</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Number">
+            <summary>Number</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Boolean">
+            <summary>Boolean</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Array">
+            <summary>Array</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Object">
+            <summary>Object</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Key">
+            <summary>Key</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Null">
+            <summary>Null</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.EnumMember">
+            <summary>EnumMember</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Struct">
+            <summary>Struct</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Event">
+            <summary>Event</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.Operator">
+            <summary>Operator</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.SymbolKind.TypeParameter">
+            <summary>TypeParameter</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocumentEdit">
+            <summary>
+            For <c>textDocument/rename</c> and <c>workspace/applyEdit</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocumentIdentifier">
+            <summary>
+            For <c>textDocument/didChange</c>,
+            <c>textDocument/willSave</c>,
+            <c>textDocument/willSaveWaitUntil</c>,
+            <c>textDocument/didSave</c>,
+            <c>textDocument/didClose</c>,
+            <c>textDocument/completion</c>,
+            <c>textDocument/hover</c>,
+            <c>textDocument/references</c>,
+            <c>textDocument/documentHighlight</c>,
+            <c>textDocument/documentSymbol</c>,
+            <c>textDocument/formatting</c>,
+            <c>textDocument/rangeFormatting</c>,
+            <c>textDocument/onTypeFormatting</c>,
+            <c>textDocument/definition</c>,
+            <c>textDocument/codeAction</c>,
+            <c>textDocument/codeLens</c>,
+            <c>textDocument/documentLink</c>,
+            <c>textDocument/rename</c>, and
+            <c>workplace/applyEdit</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.CodeAction">
+            <summary>
+            For <c>textDocument/codeAction</c>
+            </summary>
+            <remarks>
+            <para>
+            A code action represents a change that can be performed in code, e.g. to fix a problem or to refactor code.
+            </para>
+            <para>
+            A CodeAction must set either <c>edit</c> and/or a <c>command</c>.
+            If both are supplied, the <c>edit</c> is applied first, then the <c>command</c> is executed.
+            </para>
+            </remarks>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeAction.title">
+            <summary>
+            A short, human-readable, title for this code action.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeAction.kind">
+            <summary>
+            The kind of the code action.
+            </summary>
+            <remarks>
+            Used to filter code actions.
+            </remarks>
+            <value>
+            See <see cref="T:LanguageServer.Parameters.CodeActionKind"/> for an enumeration of standardized kinds.
+            </value>
+            <seealso cref="T:LanguageServer.Parameters.CodeActionKind"/>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeAction.diagnostics">
+            <summary>
+            The diagnostics that this code action resolves.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeAction.edit">
+            <summary>
+            The workspace edit this code action performs.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeAction.command">
+            <summary>
+            A command this code action executes.
+            </summary>
+            <remarks>
+            If a code action provides an edit and a command, first the edit is executed and then the command.
+            </remarks>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.CodeActionContext">
+            <summary>
+            For <c>textDocument/codeAction</c>
+            </summary>
+            <remarks>
+            Contains additional diagnostic information about the context in which a code action is run.
+            </remarks>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeActionContext.diagnostics">
+            <summary>
+            An array of diagnostics.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeActionContext.only">
+            <summary>
+            Requested kind of actions to return.
+            </summary>
+            <remarks>
+            Actions not of this kind are filtered out by the client before being shown. So servers
+            can omit computing them.
+            </remarks>
+            <value>
+            See <see cref="T:LanguageServer.Parameters.CodeActionKind"/> for an enumeration of standardized kinds.
+            </value>
+            <seealso>Spec 3.8.0</seealso>
+            <seealso cref="T:LanguageServer.Parameters.CodeActionKind"/>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.CodeActionParams">
+            <summary>
+            For <c>textDocument/codeAction</c>
+            </summary>
+            <remarks>
+            Params for the CodeActionRequest
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeActionParams.textDocument">
+            <summary>
+            The document in which the command was invoked.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeActionParams.range">
+            <summary>
+            The range for which the command was invoked.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeActionParams.context">
+            <summary>
+            Context carrying additional information.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.CodeActionResult">
+            <summary>
+            For <c>textDocument/codeAction</c>
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.CodeActionResult.op_Implicit(LanguageServer.Parameters.TextDocument.Command[])~LanguageServer.Parameters.TextDocument.CodeActionResult">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:LanguageServer.Parameters.TextDocument.Command[]"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.CodeActionResult"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.CodeActionResult.op_Implicit(LanguageServer.Parameters.TextDocument.CodeAction[])~LanguageServer.Parameters.TextDocument.CodeActionResult">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:LanguageServer.Parameters.TextDocument.CodeAction[]"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.CodeActionResult"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.CodeActionResult.#ctor(LanguageServer.Parameters.TextDocument.Command[])">
+            <summary>
+            Initializes a new instance of <c>CodeActionResult</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.CodeActionResult.#ctor(LanguageServer.Parameters.TextDocument.CodeAction[])">
+            <summary>
+            Initializes a new instance of <c>CodeActionResult</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeActionResult.IsCommandArray">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.Command[]"/>.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeActionResult.IsCodeActionArray">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.CodeAction[]"/>.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeActionResult.CommandArray">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.Command[]"/>.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CodeActionResult.CodeActionArray">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.CodeAction[]"/>.
+            </summary>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.Color">
+            <summary>
+            Represents a color in RGBA space.
+            For <c>textDocument/documentColor</c> and <c>textDocument/colorPresentation</c>
+            </summary>
+            <remarks>
+            Underlying values should be in the range <c>0.0</c> to <c>1.0</c>.
+            Any values outside the range will be clamped to this range.
+            <c>NaN</c> will be converted to <c>0.0</c>.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.Color.red">
+            <summary>
+            The red component of this color in the range [0-1].
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.Color.green">
+            <summary>
+            The green component of this color in the range [0-1].
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.Color.blue">
+            <summary>
+            The blue component of this color in the range [0-1].
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.Color.alpha">
+            <summary>
+            The alpha component of this color in the range [0-1].
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.Color.#ctor(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <c>Color</c> struct with the specified color components.
+            </summary>
+            <param name="red"></param>
+            <param name="green"></param>
+            <param name="blue"></param>
+            <param name="alpha"></param>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Color.RedByte">
+            <summary>
+            Gets the red component value of this <c>Color</c> structure as a byte value.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Color.GreenByte">
+            <summary>
+            Gets the green component value of this <c>Color</c> structure as a byte value.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Color.BlueByte">
+            <summary>
+            Gets the blue component value of this <c>Color</c> structure as a byte value.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Color.AlphaByte">
+            <summary>
+            Gets the alpha component value of this <c>Color</c> structure as a byte value.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Color.RGB">
+            <summary>
+            Gets the RGB value of this <c>Color</c> structure as a numeric triplet
+            in the functional notation like <c>rgb(255, 255, 255)</c>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Color.RGBA">
+            <summary>
+            Gets the RGBA value of this <c>Color</c> structure as a numeric quadruplet
+            in the functional notation like <c>rgba(255, 255, 255, 1)</c>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Color.HexRGB">
+            <summary>
+            Gets the RGB value of this <c>Color</c> structure as a six digit hex value
+            with a leading hash character like <c>#ffffff</c>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Color.HexRGBA">
+            <summary>
+            Gets the RGBA value of this <c>Color</c> structure as a eight digit hex value
+            with a leading hash character like <c>#ffffffff</c>.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.Color.ToString">
+            <summary>
+            Converts this <c>Color</c> structure to a human-readable string.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.ColorInformation">
+            <summary>
+            For <c>textDocument/documentColor</c>
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.ColorInformation.range">
+            <summary>
+            The range in the document where this color appears.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.ColorInformation.color">
+            <summary>
+            The actual color value for this color range.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.ColorPresentation">
+            <summary>
+            For <c>textDocument/colorPresentation</c>
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.ColorPresentation.label">
+            <summary>
+            The label of this color presentation. It will be shown on the color picker header.
+            </summary>
+            <remarks>
+            By default this is also the text that is inserted when selecting this color presentation.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.ColorPresentation.textEdit">
+            <summary>
+            An <see cref="T:LanguageServer.Parameters.TextEdit">edit</see> which is applied to a document when selecting this presentation for the color.
+            </summary>
+            <remarks>
+            When <c>falsy</c> the <see cref="P:LanguageServer.Parameters.TextDocument.ColorPresentation.label"/> is used.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.ColorPresentation.additionalTextEdits">
+            <summary>
+            An optional array of additional <see cref="T:LanguageServer.Parameters.TextEdit">text edits</see>
+            that are applied when selecting this color presentation.
+            </summary>
+            <remarks>
+            Edits must not overlap with the main <see cref="P:LanguageServer.Parameters.TextDocument.ColorPresentation.textEdit">edit</see> nor with themselves.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.ColorPresentationParams">
+            <summary>
+            For <c>textDocument/colorPresentation</c>
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.ColorPresentationParams.textDocument">
+            <summary>
+            The text document.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.ColorPresentationParams.color">
+            <summary>
+            The color information to request presentations for.
+            </summary>
+            <remarks>
+            The property's name was originally <c>colorInfo</c>, and it has been changed to <c>color</c> since the spec 3.8.0.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.ColorPresentationParams.range">
+            <summary>
+            The range where the color would be inserted. Serves as a context.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.CompletionContext">
+            <summary>
+            For <c>textDocument/completion</c>
+            </summary>
+            <remarks>
+            Contains additional information about the context in which a completion request is triggered.
+            </remarks>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionContext.triggerKind">
+            <summary>
+            How the completion was triggered.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionContext.triggerCharacter">
+            <summary>
+            The trigger character (a single character) that has trigger code complete.
+            Is undefined if <c>triggerKind !== CompletionTriggerKind.TriggerCharacter</c>
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.CompletionItem">
+            <summary>
+            For <c>textDocument/completion</c> and <c>completionItem/resolve</c>
+            </summary>
+            <seealso>Spec 3.9.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.label">
+            <summary>
+            The label of this completion item.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.kind">
+            <summary>
+            The kind of this completion item.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.detail">
+            <summary>
+            A human-readable string with additional information
+            about this item, like type or symbol information.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.documentation">
+            <summary>
+            A human-readable string that represents a doc-comment.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.deprecated">
+            <summary>
+            Indicates if this item is deprecated.
+            </summary>
+            <seealso>Spec 3.7.2</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.preselect">
+            <summary>
+            Select this item when showing.
+            </summary>
+            <remarks>
+            Note that only one completion item can be selected and that the tool / client decides which item that is.
+            The rule is that the <b>first</b> item of those that match best is selected.
+            </remarks>
+            <seealso>Spec 3.9.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.sortText">
+            <summary>
+            A string that should be used when comparing this item with other items.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.filterText">
+            <summary>
+            A string that should be used when filtering a set of completion items.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.insertText">
+            <summary>
+            A string that should be inserted into a document when selecting this completion.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.insertTextFormat">
+            <summary>
+            The format of the insert text.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.textEdit">
+            <summary>
+            An edit which is applied to a document when selecting this completion.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.additionalTextEdits">
+            <summary>
+            An optional array of additional text edits that are applied when selecting this completion.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.commitCharacters">
+            <summary>
+            An optional set of characters that when pressed while this completion is active
+            will accept it first and then type that character.
+            </summary>
+            <remarks>
+            Note that all commit characters should have <c>length=1</c> and that superfluous characters will be ignored.
+            </remarks>
+            <seealso>Spec 3.2.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.command">
+            <summary>
+            An optional command that is executed <b>after</b> inserting this completion.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionItem.data">
+            <summary>
+            An data entry field that is preserved on a completion item between a completion and a completion resolve request.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.CompletionItemKind">
+            <summary>
+            For <c>textDocument/completion</c> and <c>completionItem/resolve</c>
+            </summary>
+            <remarks>
+            The kind of a completion entry.
+            </remarks>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Text">
+            <summary>Text</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Method">
+            <summary>Method</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Function">
+            <summary>Function</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Constructor">
+            <summary>Constructor</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Field">
+            <summary>Field</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Variable">
+            <summary>Variable</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Class">
+            <summary>Class</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Interface">
+            <summary>Interface</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Module">
+            <summary>Module</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Property">
+            <summary>Property</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Unit">
+            <summary>Unit</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Value">
+            <summary>Value</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Enum">
+            <summary>Enum</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Keyword">
+            <summary>Keyword</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Snippet">
+            <summary>Snippet</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Color">
+            <summary>Color</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.File">
+            <summary>File</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Reference">
+            <summary>Reference</summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Folder">
+            <summary>Folder</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.EnumMember">
+            <summary>EnumMember</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Constant">
+            <summary>Constant</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Struct">
+            <summary>Struct</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Event">
+            <summary>Event</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.Operator">
+            <summary>Operator</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionItemKind.TypeParameter">
+            <summary>TypeParameter</summary>
+            <seealso>Spec 3.4.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.CompletionParams">
+            <summary>
+            For <c>textDocument/completion</c>
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionParams.context">
+            <summary>
+            The completion context.
+            </summary>
+            <remarks>
+            This is only available if the client specifies to send this
+            using <c>ClientCapabilities.textDocument.completion.contextSupport === true</c>
+            </remarks>/remarks>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.CompletionResult">
+            <summary>
+            For <c>textDocument/completion</c>
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.CompletionResult.op_Implicit(LanguageServer.Parameters.TextDocument.CompletionItem[])~LanguageServer.Parameters.TextDocument.CompletionResult">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:LanguageServer.Parameters.TextDocument.CompletionItem[]"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.CompletionResult"/>
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.CompletionResult.op_Implicit(LanguageServer.Parameters.TextDocument.CompletionList)~LanguageServer.Parameters.TextDocument.CompletionResult">
+            <summary>
+            Defines an implicit conversion of a <see cref="P:LanguageServer.Parameters.TextDocument.CompletionResult.CompletionList"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.CompletionResult"/>
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.CompletionResult.#ctor(LanguageServer.Parameters.TextDocument.CompletionItem[])">
+            <summary>
+            Initializes a new instance of <c>CompletionResult</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.CompletionResult.#ctor(LanguageServer.Parameters.TextDocument.CompletionList)">
+            <summary>
+            Initializes a new instance of <c>CompletionResult</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionResult.IsCompletionItemArray">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.CompletionItem[]"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionResult.IsCompletionList">
+            <summary>
+            Returns true if its underlying value is a <see cref="P:LanguageServer.Parameters.TextDocument.CompletionResult.CompletionList"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionResult.CompletionItemArray">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.CompletionItem[]"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.CompletionResult.CompletionList">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="P:LanguageServer.Parameters.TextDocument.CompletionResult.CompletionList"/>.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.CompletionTriggerKind">
+            <summary>
+            How a completion was triggered
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionTriggerKind.Invoked">
+            <summary>
+            Completion was triggered by typing an identifier (24x7 code
+            complete), manual invocation (e.g Ctrl+Space) or via API.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionTriggerKind.TriggerCharacter">
+            <summary>
+            Completion was triggered by a trigger character specified by
+            the <c>triggerCharacters</c> properties of the <c>CompletionRegistrationOptions</c>.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.CompletionTriggerKind.TriggerForIncompleteCompletions">
+            <summary>
+            Completion was re-triggered as the current completion list is incomplete.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.Diagnostic">
+            <summary>
+            For <c>textDocument/codeAction</c> and <c>textDocument/publishDiagnostics</c>
+            </summary>
+            <seealso>Spec 3.7.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Diagnostic.range">
+            <summary>
+            The range at which the message applies.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Diagnostic.severity">
+            <summary>
+            The diagnostic's severity. Can be omitted.
+            </summary>
+            <remarks>
+            If omitted it is up to the client to interpret diagnostics as error, warning, info or hint.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Diagnostic.code">
+            <summary>
+            The diagnostic's code. Can be omitted.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Diagnostic.source">
+            <summary>
+            A human-readable string describing the source of this diagnostic,
+            e.g. <c>'typescript'</c> or <c>'super lint'</c>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Diagnostic.message">
+            <summary>
+            The diagnostic's message.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Diagnostic.relatedInformation">
+            <summary>
+            An array of related diagnostic information.
+            </summary>
+            <remarks>
+            e.g. when symbol-names within a scope collide
+            all definitions can be marked via this property.
+            </remarks>
+            <seealso>Spec 3.7.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.DiagnosticRelatedInformation">
+            <summary>
+            Represents a related message and source code location for a diagnostic.
+            For <c>textDocument/codeAction</c> and <c>textDocument/publishDiagnostics</c>
+            </summary>
+            <remarks>
+            This should be used to point to code locations that cause or related to a diagnostics,
+            e.g when duplicating a symbol in a scope.
+            </remarks>
+            <seealso>Spec 3.7.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DiagnosticRelatedInformation.location">
+            <summary>
+            The location of this related diagnostic information.
+            </summary>
+            <seealso>Spec 3.7.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DiagnosticRelatedInformation.message">
+            <summary>
+            The message of this related diagnostic information.
+            </summary>
+            <seealso>Spec 3.7.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.DiagnosticSeverity">
+            <summary>
+            Diagnostic severities
+            </summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.DiagnosticSeverity.Error">
+            <summary>
+            Reports an error.
+            </summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.DiagnosticSeverity.Warning">
+            <summary>
+            Reports a warning.
+            </summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.DiagnosticSeverity.Information">
+            <summary>
+            Reports an information.
+            </summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TextDocument.DiagnosticSeverity.Hint">
+            <summary>
+            Reports a hint.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.DidChangeTextDocumentParams">
+            <summary>
+            For <c>textDocument/didChange</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.Documentation">
+            <summary>
+            For <c>textDocument/signatureHelp</c>,
+            <c>textDocument/completion</c>, and
+            <c>completionItem/resolve</c>
+            </summary>
+            <remarks>
+            A human-readable string that represents a doc-comment.
+            </remarks>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.Documentation.op_Implicit(System.String)~LanguageServer.Parameters.TextDocument.Documentation">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:System.String"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.Documentation"/>
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.Documentation.op_Implicit(LanguageServer.Parameters.TextDocument.MarkupContent)~LanguageServer.Parameters.TextDocument.Documentation">
+            <summary>
+            Defines an implicit conversion of a <see cref="P:LanguageServer.Parameters.TextDocument.Documentation.MarkupContent"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.Documentation"/>
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.Documentation.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of <c>CompletionItemDocumentation</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.Documentation.#ctor(LanguageServer.Parameters.TextDocument.MarkupContent)">
+            <summary>
+            Initializes a new instance of <c>CompletionItemDocumentation</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Documentation.IsString">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:System.String"/>.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Documentation.IsMarkupContent">
+            <summary>
+            Returns true if its underlying value is a <see cref="P:LanguageServer.Parameters.TextDocument.Documentation.MarkupContent"/>.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Documentation.String">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:System.String"/>.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Documentation.MarkupContent">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="P:LanguageServer.Parameters.TextDocument.Documentation.MarkupContent"/>.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.DocumentColorParams">
+            <summary>
+            For <c>textDocument/documentColor</c>
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentColorParams.textDocument">
+            <summary>
+            The text document.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.DocumentSymbol">
+            <summary>
+            For <c>textDocument/documentSymbol</c>
+            </summary>
+            <remarks>
+            Represents programming constructs like variables, classes, interfaces etc. that appear in a document.
+            Document symbols can be hierarchical and they have two ranges:
+            one that encloses its definition and one that points to its most interesting range,
+            e.g. the range of an identifier.
+            </remarks>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentSymbol.name">
+            <summery>
+            The name of this symbol.
+            </summery>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentSymbol.detail">
+            <summery>
+            More detail for this symbol, e.g the signature of a function. If not provided the name is used.
+            </summery>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentSymbol.kind">
+            <summery>
+            The kind of this symbol.
+            </summery>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentSymbol.deprecated">
+            <summery>
+            Indicates if this symbol is deprecated.
+            </summery>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentSymbol.range">
+            <summery>
+            The range enclosing this symbol not including leading/trailing whitespace but everything else
+            like comments. This information is typically used to determine if the the clients cursor is
+            inside the symbol to reveal in the symbol in the UI.
+            </summery>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentSymbol.selectionRange">
+            <summery>
+            The range that should be selected and revealed when this symbol is being picked, e.g the name of a function.
+            Must be contained by the the <c>range</c>.
+            </summery>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentSymbol.children">
+            <summery>
+            Children of this symbol, e.g. properties of a class.
+            </summery>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.DocumentSymbolResult">
+            <summary>
+            For <c>textDocument/documentSymbol</c>
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.DocumentSymbolResult.op_Implicit(LanguageServer.Parameters.TextDocument.DocumentSymbol[])~LanguageServer.Parameters.TextDocument.DocumentSymbolResult">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:LanguageServer.Parameters.TextDocument.DocumentSymbol[]"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.DocumentSymbolResult"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.DocumentSymbolResult.op_Implicit(LanguageServer.Parameters.SymbolInformation[])~LanguageServer.Parameters.TextDocument.DocumentSymbolResult">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:LanguageServer.Parameters.TextDocument.SymbolInformation[]"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.DocumentSymbolResult"/>
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.DocumentSymbolResult.#ctor(LanguageServer.Parameters.TextDocument.DocumentSymbol[])">
+            <summary>
+            Initializes a new instance of <c>DocumentSymbolResult</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.DocumentSymbolResult.#ctor(LanguageServer.Parameters.SymbolInformation[])">
+            <summary>
+            Initializes a new instance of <c>DocumentSymbolResult</c> with the specified value.
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentSymbolResult.IsDocumentSymbolArray">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.DocumentSymbol[]"/>.
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentSymbolResult.IsSymbolInformationArray">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.SymbolInformation[]"/>.
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentSymbolResult.DocumentSymbolArray">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.DocumentSymbol[]"/>.
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.DocumentSymbolResult.SymbolImformationArray">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.SymbolInformation[]"/>.
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.FoldingRange">
+            <summary>
+            Represents a folding range.
+            For <c>textDocument/foldingRange</c>
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.FoldingRange.startLine">
+            <summary>
+            The zero-based line number from where the folded range starts.
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.FoldingRange.startCharacter">
+            <summary>
+            The zero-based character offset from where the folded range starts.
+            </summary>
+            <remarks>
+            If not defined, defaults to the length of the start line.
+            </remarks>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.FoldingRange.endLine">
+            <summary>
+            The zero-based line number where the folded range ends.
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.FoldingRange.endCharacter">
+            <summary>
+            The zero-based character offset before the folded range ends.
+            </summary>
+            <remarks>
+            If not defined, defaults to the length of the end line.
+            </remarks>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.FoldingRange.kind">
+            <summary>
+            Describes the kind of the folding range such as <c>comment</c> or <c>region</c>.
+            </summary>
+            <remarks>
+            The kind is used to categorize folding ranges and used by commands like 'Fold all comments'.
+            </remarks>
+            <value>
+            See <see cref="T:LanguageServer.Parameters.FoldingRangeKind"/> for an enumeration of standardized kinds.
+            </value>
+            <seealso>Spec 3.10.0</seealso>
+            <seealso cref="T:LanguageServer.Parameters.FoldingRangeKind"/>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.FoldingRangeRequestParam">
+            <summary>
+            For <c>textDocument/foldingRange</c>
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.FoldingRangeRequestParam.textDocument">
+            <summary>
+            The text document.
+            </summary>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.Hover">
+            <summary>
+            For <c>textDocument/hover</c>
+            </summary>
+            <remarks>
+            The result of a hover request.
+            </remarks>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Hover.contents">
+            <summary>
+            The hover's content
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.Hover.range">
+            <summary>
+            An optional range is a range inside a text document
+            that is used to visualize a hover, e.g. by changing the background color.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.HoverContents">
+            <summary>
+            The hover's content
+            </summary>
+            <remarks>
+            <see cref="P:LanguageServer.Parameters.TextDocument.HoverContents.MarkedString"/> is deprecated, please use <see cref="P:LanguageServer.Parameters.TextDocument.HoverContents.MarkupContent"/> instead.
+            </remarks>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.HoverContents.op_Implicit(System.String)~LanguageServer.Parameters.TextDocument.HoverContents">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:System.String"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.HoverContents"/>
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.HoverContents.op_Implicit(LanguageServer.Parameters.TextDocument.MarkedString)~LanguageServer.Parameters.TextDocument.HoverContents">
+            <summary>
+            Defines an implicit conversion of a <see cref="P:LanguageServer.Parameters.TextDocument.HoverContents.MarkedString"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.HoverContents"/>
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.HoverContents.op_Implicit(System.String[])~LanguageServer.Parameters.TextDocument.HoverContents">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:System.String[]"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.HoverContents"/>
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.HoverContents.op_Implicit(LanguageServer.Parameters.TextDocument.MarkedString[])~LanguageServer.Parameters.TextDocument.HoverContents">
+            <summary>
+            Defines an implicit conversion of a <see cref="T:LanguageServer.Parameters.TextDocument.MarkedString[]"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.HoverContents"/>
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.HoverContents.op_Implicit(LanguageServer.Parameters.TextDocument.MarkupContent)~LanguageServer.Parameters.TextDocument.HoverContents">
+            <summary>
+            Defines an implicit conversion of a <see cref="P:LanguageServer.Parameters.TextDocument.HoverContents.MarkupContent"/> to a <see cref="T:LanguageServer.Parameters.TextDocument.HoverContents"/>
+            </summary>
+            <param name="value"></param>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.HoverContents.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of <c>HoverContents</c> with the specified value.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.HoverContents.#ctor(LanguageServer.Parameters.TextDocument.MarkedString)">
+            <summary>
+            Initializes a new instance of <c>HoverContents</c> with the specified value.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.HoverContents.#ctor(System.String[])">
+            <summary>
+            Initializes a new instance of <c>HoverContents</c> with the specified value.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.HoverContents.#ctor(LanguageServer.Parameters.TextDocument.MarkedString[])">
+            <summary>
+            Initializes a new instance of <c>HoverContents</c> with the specified value.
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Parameters.TextDocument.HoverContents.#ctor(LanguageServer.Parameters.TextDocument.MarkupContent)">
+            <summary>
+            Initializes a new instance of <c>HoverContents</c> with the specified value.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.HoverContents.IsString">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.HoverContents.IsMarkedString">
+            <summary>
+            Returns true if its underlying value is a <see cref="P:LanguageServer.Parameters.TextDocument.HoverContents.MarkedString"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.HoverContents.IsStringArray">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:System.String[]"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.HoverContents.IsMarkedStringArray">
+            <summary>
+            Returns true if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.MarkedString[]"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.HoverContents.IsMarkupContent">
+            <summary>
+            Returns true if its underlying value is a <see cref="P:LanguageServer.Parameters.TextDocument.HoverContents.MarkupContent"/>.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.HoverContents.String">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.HoverContents.MarkedString">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="P:LanguageServer.Parameters.TextDocument.HoverContents.MarkedString"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.HoverContents.StringArray">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:System.String[]"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.HoverContents.MarkedStringArray">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="T:LanguageServer.Parameters.TextDocument.MarkedString[]"/>.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.HoverContents.MarkupContent">
+            <summary>
+            Gets the value of the current object if its underlying value is a <see cref="P:LanguageServer.Parameters.TextDocument.HoverContents.MarkupContent"/>.
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.MarkedString">
+            <summary>
+            MarkedString can be used to render human readable text.
+            </summary>
+            <remarks>
+            <para>
+            It is either a markdown string or a code-block that provides a language and a code snippet.
+            The language identifier is semantically equal to the optional language identifier
+            in fenced code blocks in GitHub issues.
+            See https://help.github.com/articles/creating-and-highlighting-code-blocks/#syntax-highlighting
+            </para>
+            <para>
+            The pair of a language and a value is an equivalent to markdown:
+            <code lang="markdown">
+            <![CDATA[
+            ```${language}
+            ${value}
+            ```
+            ]]>
+            </code>
+            </para>
+            <para>
+            Note that markdown strings will be sanitized - that means html will be escaped.
+            </para>
+            <para>
+            <c>MarkedString</c> is deprecated. use <c>MarkupContent</c> instead.
+            </para>
+            </remarks>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.MarkedString.language">
+            <summary>
+            The language in which the code block is written.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.MarkedString.value">
+            <summary>
+            The code block.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.MarkupContent">
+            <summary>
+            For <c>textDocument/completion</c> and <c>textDocument/hover</c>
+            </summary>
+            <remarks>
+            <para>
+            A <c>MarkupContent</c> literal represents a string value which content is interpreted base on its
+            kind flag. Currently the protocol supports <c>plaintext</c> and <c>markdown</c> as markup kinds.
+            </para>
+            <para>
+            If the kind is <c>markdown</c> then the value can contain fenced code blocks like in GitHub issues.
+            See https://help.github.com/articles/creating-and-highlighting-code-blocks/#syntax-highlighting
+            </para>
+            </remarks>
+            <example>
+            Here is an example how such a string can be constructed using JavaScript / TypeScript:
+            <code lang="typescript">
+            <![CDATA[
+            let markdown: MarkdownContent = {
+                kind: MarkupKind.Markdown,
+                value: [
+                    '# Header',
+                    'Some text',
+                    '```typescript',
+                    'someCode();',
+                    '```'
+                ].join('\n')
+            };
+            ]]>
+            </code>
+            </example>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.MarkupContent.kind">
+            <summary>
+            The type of the Markup
+            </summary>
+            <value>
+            <list type="bullet">
+            <item>
+            <term>plaintext</term>
+            <description>Plain text is supported as a content format</description>
+            </item>
+            <item>
+            <term>markdown</term>
+            <description>Markdown is supported as a content format</description>
+            </item>
+            </list>
+            See <see cref="T:LanguageServer.Parameters.MarkupKind"/> for an enumeration of standardized kinds.
+            </value>
+            <seealso>Spec 3.3.0</seealso>
+            <seealso cref="T:LanguageServer.Parameters.MarkupKind"/>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.MarkupContent.value">
+            <summary>
+            The content itself
+            </summary>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.ParameterInformation">
+            <summary>
+            For <c>textDocument/signatureHelp</c>
+            </summary>
+            <remarks>
+            Represents a parameter of a callable-signature.
+            A parameter can have a label and a doc-comment.
+            </remarks>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.ParameterInformation.label">
+            <summary>
+            The label of this parameter.
+            </summary>
+            <remarks>
+            Will be shown in the UI.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.ParameterInformation.documentation">
+            <summary>
+            The human-readable doc-comment of this parameter.
+            </summary>
+            <remarks>
+            Will be shown in the UI but can be omitted.
+            </remarks>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.PublishDiagnosticsParams">
+            <summary>
+            For <c>textDocument/publishDiagnostics</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.PublishDiagnosticsParams.uri">
+            <summary>
+            The URI for which diagnostic information is reported.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.PublishDiagnosticsParams.diagnostics">
+            <summary>
+            An array of diagnostic information items.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.SignatureHelp">
+            <summary>
+            For <c>textDocument/signatureHelp</c>
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.SignatureHelp.signatures">
+            <summary>
+            One or more signatures.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.SignatureHelp.activeSignature">
+            <summary>
+            The active signature.
+            </summary>
+            <remarks>
+            <para>
+            If omitted or the value lies outside the
+            range of <c>signatures</c> the value defaults to zero or is ignored if
+            <c>signatures.length === 0</c>. Whenever possible implementors should
+            make an active decision about the active signature and shouldn't
+            rely on a default value.
+            </para>
+            <para>
+            In future version of the protocol this property might become
+            mandatory to better express this.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.SignatureHelp.activeParameter">
+            <summary>
+            The active parameter of the active signature.
+            </summary>
+            <remarks>
+            <para>
+            If omitted or the value
+            lies outside the range of <c>signatures[activeSignature].parameters</c>
+            defaults to 0 if the active signature has parameters. If
+            the active signature has no parameters it is ignored.
+            </para>
+            <para>
+            In future version of the protocol this property might become
+            mandatory to better express the active parameter if the
+            active signature does have any.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.SignatureInformation">
+            <summary>
+            For <c>textDocument/signatureHelp</c>
+            </summary>
+            <remarks>
+            Represents the signature of something callable.
+            A signature can have a label, like a function-name, a doc-comment, and a set of parameters.
+            </remarks>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.SignatureInformation.label">
+            <summary>
+            The label of this signature.
+            </summary>
+            <remarks>
+            Will be shown in the UI.
+            </remarks>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.SignatureInformation.documentation">
+            <summary>
+            The human-readable doc-comment of this parameter.
+            </summary>
+            <remarks>
+            Will be shown in the UI but can be omitted.
+            </remarks>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.TextDocument.SignatureInformation.parameters">
+            <summary>
+            The parameters of this signature.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextDocument.WillSaveTextDocumentParams">
+            <summary>
+            For <c>textDocument/willSave</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TextEdit">
+            <summary>
+            For <c>textDocument/willSaveWaitUntil</c>,
+            <c>textDocument/completion</c>,
+            <c>textDocument/formatting</c>,
+            <c>textDocument/rangeFormatting</c>,
+            <c>textDocument/onTypeFormatting</c>,
+            <c>textDocument/rename</c>, and
+            <c>workspace/applyEdit</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.TraceKind">
+            <summary>
+            For <c>initialize</c>
+            </summary>
+            <seealso cref="P:LanguageServer.Parameters.General.InitializeParams.trace"/>
+        </member>
+        <member name="F:LanguageServer.Parameters.TraceKind.Off">
+            <summary>
+            trace is disabled.
+            </summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TraceKind.Messages">
+            <summary>
+            trace is partially enabled.
+            </summary>
+        </member>
+        <member name="F:LanguageServer.Parameters.TraceKind.Verbose">
+            <summary>
+            trace is fully enabled.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.VersionedTextDocumentIdentifier">
+            <summary>
+            For <c>textDocument/rename</c>,
+            <c>textDocument/didChange</c>, and
+            <c>workspace/applyEdit</c>
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.WorkspaceEdit">
+            <summary>
+            For <c>textDocument/rename</c> and <c>workspace/applyEdit</c>
+            </summary>
+            <remarks>
+            A workspace edit represents changes to many resources managed in the workspace.
+            The edit should either provide <c>changes</c> or <c>documentChanges</c>.
+            If the client can handle versioned document edits and if <c>documentChanges</c> are present,
+            the latter are preferred over <c>changes</c>.
+            </remarks>
+            <seealso>Spec 3.1.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.WorkspaceEdit.changes">
+            <summary>
+            Holds changes to existing resources.
+            </summary>
+        </member>
+        <member name="P:LanguageServer.Parameters.WorkspaceEdit.documentChanges">
+            <summary>
+            An array of <c>TextDocumentEdit</c>s to express changes to n different text documents
+            where each text document edit addresses a specific version of a text document.
+            Whether a client supports versioned document edits is expressed
+            via <c>WorkspaceClientCapabilities.workspaceEdit.documentChanges</c>.
+            </summary>
+        </member>
+        <member name="T:LanguageServer.Parameters.Workspace.ConfigurationItem">
+            <summary>
+            For <c>workspace/configuration</c>
+            </summary>
+            <remarks>
+            A <c>ConfigurationItem</c> consist of the configuration section to ask for
+            and an additional scope URI. 
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.Workspace.ConfigurationItem.scopeUri">
+            <summary>
+            The scope to get the configuration section for.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.Workspace.ConfigurationItem.section">
+            <summary>
+            The configuration section asked for.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.Workspace.ConfigurationParams">
+            <summary>
+            For <c>workspace/configuration</c>
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.Workspace.ConfigurationParams.items">
+            <summary>
+            The order of the returned configuration settings correspond
+            to the order of the passed <c>ConfigurationItems</c>
+            </summary>
+            <remarks>
+            (e.g. the first item in the response is the result
+            for the first configuration item in the params).
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.Workspace.DidChangeWorkspaceFoldersParams">
+            <summary>
+            For <c>workspace/didChangeWorkspaceFolders</c>
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.Workspace.DidChangeWorkspaceFoldersParams.event">
+            <summary>
+            The actual workspace folder change event.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.Workspace.WorkspaceFolder">
+            <summary>
+            For <c>initialize</c> and <c>workspace/workspaceFolders</c>
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.Workspace.WorkspaceFolder.uri">
+            <summary>
+            The associated URI for this workspace folder.
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.Workspace.WorkspaceFolder.name">
+            <summary>
+            The name of the workspace folder.
+            </summary>
+            <remarks>
+            Defaults to the uri's basename.
+            </remarks>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.Workspace.WorkspaceFoldersChangeEvent">
+            <summary>
+            For <c>workspace/didChangeWorkspaceFolders</c>
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.Workspace.WorkspaceFoldersChangeEvent.added">
+            <summary>
+            The array of added workspace folders
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="P:LanguageServer.Parameters.Workspace.WorkspaceFoldersChangeEvent.removed">
+            <summary>
+            The array of the removed workspace folders
+            </summary>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="T:LanguageServer.Parameters.Workspace.WorkspaceSymbolParams">
+            <summary>
+            For <c>workspace/symbol</c>
+            </summary>
+        </member>
+        <member name="M:LanguageServer.Server.TextDocumentServiceTemplate.Completion(LanguageServer.Parameters.TextDocument.CompletionParams)">
+            <summary>
+            The Completion request is sent from the client to the server to compute completion items at a given cursor position. 
+            </summary>
+            <remarks>
+            <para>
+            Completion items are presented in the <a href="https://code.visualstudio.com/docs/editor/editingevolved#_intellisense">IntelliSense</a> user interface.
+            If computing full completion items is expensive, servers can additionally provide a handler for the completion item resolve request (<c>completionItem/resolve</c>).
+            </para>
+            <para>
+            This request is sent when a completion item is selected in the user interface.
+            </para>
+            <para>
+            A typical use case is for example: the <c>textDocument/completion</c> request doesn’t fill
+            in the documentation property for returned completion items since it is expensive to compute.
+            When the item is selected in the user interface then a <c>completionItem/resolve</c> request
+            is sent with the selected completion item as a param.
+            </para>
+            <para>
+            Registration Options: <c>CompletionRegistrationOptions</c>
+            </para>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Server.TextDocumentServiceTemplate.DocumentSymbols(LanguageServer.Parameters.TextDocument.DocumentSymbolParams)">
+            <summary>
+            The document symbol request is sent from the client to the server
+            to return a flat list of all symbols found in a given text document.
+            </summary>
+            <remarks>
+            <para>
+            Neither the symbol’s location range nor the symbol’s container name should be used to infer a hierarchy.
+            </para>
+            <para>
+            Registration Options: <c>TextDocumentRegistrationOptions</c>
+            </para>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Server.TextDocumentServiceTemplate.DocumentColor(LanguageServer.Parameters.TextDocument.DocumentColorParams)">
+            <summary>
+            The document color request is sent from the client to the server
+            to list all color references found in a given text document.
+            Along with the range, a color value in RGB is returned.
+            </summary>
+            <remarks>
+            Clients can use the result to decorate color references in an editor. For example:
+            <list type="bullet">
+            <item><description>Color boxes showing the actual color next to the reference</description></item>
+            <item><description>Show a color picker when a color reference is edited</description></item>
+            </list>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Server.TextDocumentServiceTemplate.ColorPresentation(LanguageServer.Parameters.TextDocument.ColorPresentationParams)">
+            <summary>
+            The color presentation request is sent from the client to the server
+            to obtain a list of presentations for a color value at a given location.
+            </summary>
+            <remarks>
+            Clients can use the result to
+            <list type="bullet">
+            <item><description>modify a color reference.</description></item>
+            <item><description>show in a color picker and let users pick one of the presentations</description></item>
+            </list>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Server.TextDocumentServiceTemplate.GotoDefinition(LanguageServer.Parameters.TextDocument.TextDocumentPositionParams)">
+            <summary>
+            The goto definition request is sent from the client to the server
+            to resolve the definition location of a symbol at a given text document position.
+            </summary>
+            <remarks>
+            Registration Options: <c>TextDocumentRegistrationOptions</c>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+        </member>
+        <member name="M:LanguageServer.Server.TextDocumentServiceTemplate.GotoTypeDefinition(LanguageServer.Parameters.TextDocument.TextDocumentPositionParams)">
+            <summary>
+            The goto type definition request is sent from the client to the server
+            to resolve the type definition location of a symbol at a given text document position.
+            </summary>
+            <remarks>
+            Registration Options: <c>TextDocumentRegistrationOptions</c>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Server.TextDocumentServiceTemplate.GotoImplementation(LanguageServer.Parameters.TextDocument.TextDocumentPositionParams)">
+            <summary>
+            The goto implementation request is sent from the client to the server
+            to resolve the implementation location of a symbol at a given text document position.
+            </summary>
+            <remarks>
+            Registration Options: <c>TextDocumentRegistrationOptions</c>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Server.TextDocumentServiceTemplate.CodeAction(LanguageServer.Parameters.TextDocument.CodeActionParams)">
+            <summary>
+            The code action request is sent from the client to the server
+            to compute commands for a given text document and range.
+            </summary>
+            <remarks>
+            <para>
+            These commands are typically code fixes to either fix problems or to beautify/refactor code.
+            The result of a <c>textDocument/codeAction</c> request is an array of <c>Command</c> literals
+            which are typically presented in the user interface.
+            When the command is selected the server should be contacted again
+            (via the <c>workspace/executeCommand</c> request) to execute the command.
+            </para>
+            <para>
+            <i>Since version 3.8.0:</i> support for CodeAction literals to enable the following scenarios:
+            <list type="bullet">
+            <item><description>
+            the ability to directly return a workspace edit from the code action request.
+            This avoids having another server roundtrip to execute an actual code action.
+            However server providers should be aware that if the code action is expensive
+            to compute or the edits are huge it might still be beneficial if the result is
+            simply a command and the actual edit is only computed when needed.
+            </description></item>
+            <item><description>
+            the ability to group code actions using a kind. Clients are allowed to ignore
+            that information. However it allows them to better group code action for example
+            into corresponding menus (e.g. all refactor code actions into a refactor menu).
+            </description></item>
+            </list>
+            </para>
+            <para>
+            Clients need to announce their support for code action literals and
+            code action kinds via the corresponding client capability
+            <c>textDocument.codeAction.codeActionLiteralSupport</c>.
+            </para>
+            <para>
+            Registration Options: <c>TextDocumentRegistrationOptions</c>
+            </para>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Server.TextDocumentServiceTemplate.FoldingRange(LanguageServer.Parameters.TextDocument.FoldingRangeRequestParam)">
+            <summary>
+            The folding range request is sent from the client to the server
+            to return all folding ranges found in a given text document.
+            </summary>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="M:LanguageServer.Server.WorkspaceServiceTemplate.DidChangeWorkspaceFolders(LanguageServer.Parameters.Workspace.DidChangeWorkspaceFoldersParams)">
+            <summary>
+            The <c>workspace/didChangeWorkspaceFolders</c> notification is sent from the client
+            to the server to inform the server about workspace folder configuration changes. 
+            </summary>
+            <remarks>
+            <para>
+            The notification is sent by default if both <i>ServerCapabilities/workspace/workspaceFolders</i>
+            and <i>ClientCapabilities/workspace/workspaceFolders</i> are true;
+            or if the server has registered to receive this notification it first.
+            </para>
+            <para>
+            To register for the <c>workspace/didChangeWorkspaceFolders</c>
+            send a <c>client/registerCapability</c> request from the client to the server.
+            The registration parameter must have a registrations item of the following form,
+            where <c>id</c> is a unique id used to unregister the capability (the example uses a UUID):
+            </para>
+            <code><![CDATA[{
+                id: "28c6150c-bd7b-11e7-abc4-cec278b6b50a",
+                method: "workspace/didChangeWorkspaceFolders"
+            }]]></code>
+            </remarks>
+            <param name="params"></param>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.ServiceConnection.DidChangeWorkspaceFolders(LanguageServer.Parameters.Workspace.DidChangeWorkspaceFoldersParams)">
+            <summary>
+            The <c>workspace/didChangeWorkspaceFolders</c> notification is sent from the client
+            to the server to inform the server about workspace folder configuration changes. 
+            </summary>
+            <remarks>
+            <para>
+            The notification is sent by default if both <i>ServerCapabilities/workspace/workspaceFolders</i>
+            and <i>ClientCapabilities/workspace/workspaceFolders</i> are true;
+            or if the server has registered to receive this notification it first.
+            </para>
+            <para>
+            To register for the <c>workspace/didChangeWorkspaceFolders</c>
+            send a <c>client/registerCapability</c> request from the client to the server.
+            The registration parameter must have a registrations item of the following form,
+            where <c>id</c> is a unique id used to unregister the capability (the example uses a UUID):
+            </para>
+            <code><![CDATA[{
+                id: "28c6150c-bd7b-11e7-abc4-cec278b6b50a",
+                method: "workspace/didChangeWorkspaceFolders"
+            }]]></code>
+            </remarks>
+            <param name="params"></param>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.ServiceConnection.Completion(LanguageServer.Parameters.TextDocument.CompletionParams)">
+            <summary>
+            The Completion request is sent from the client to the server to compute completion items at a given cursor position. 
+            </summary>
+            <remarks>
+            <para>
+            Completion items are presented in the <a href="https://code.visualstudio.com/docs/editor/editingevolved#_intellisense">IntelliSense</a> user interface.
+            If computing full completion items is expensive, servers can additionally provide a handler for the completion item resolve request (<c>completionItem/resolve</c>).
+            </para>
+            <para>
+            This request is sent when a completion item is selected in the user interface.
+            </para>
+            <para>
+            A typical use case is for example: the <c>textDocument/completion</c> request doesn’t fill
+            in the documentation property for returned completion items since it is expensive to compute.
+            When the item is selected in the user interface then a <c>completionItem/resolve</c> request
+            is sent with the selected completion item as a param.
+            </para>
+            <para>
+            Registration Options: <c>CompletionRegistrationOptions</c>
+            </para>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+            <seealso>Spec 3.3.0</seealso>
+        </member>
+        <member name="M:LanguageServer.ServiceConnection.DocumentSymbols(LanguageServer.Parameters.TextDocument.DocumentSymbolParams)">
+            <summary>
+            The document symbol request is sent from the client to the server
+            to return a flat list of all symbols found in a given text document.
+            </summary>
+            <remarks>
+            <para>
+            Neither the symbol’s location range nor the symbol’s container name should be used to infer a hierarchy.
+            </para>
+            <para>
+            Registration Options: <c>TextDocumentRegistrationOptions</c>
+            </para>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+        <member name="M:LanguageServer.ServiceConnection.DocumentColor(LanguageServer.Parameters.TextDocument.DocumentColorParams)">
+            <summary>
+            The document color request is sent from the client to the server
+            to list all color references found in a given text document.
+            Along with the range, a color value in RGB is returned.
+            </summary>
+            <remarks>
+            Clients can use the result to decorate color references in an editor. For example:
+            <list type="bullet">
+            <item><description>Color boxes showing the actual color next to the reference</description></item>
+            <item><description>Show a color picker when a color reference is edited</description></item>
+            </list>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.ServiceConnection.ColorPresentation(LanguageServer.Parameters.TextDocument.ColorPresentationParams)">
+            <summary>
+            The color presentation request is sent from the client to the server
+            to obtain a list of presentations for a color value at a given location.
+            </summary>
+            <remarks>
+            Clients can use the result to
+            <list type="bullet">
+            <item><description>modify a color reference.</description></item>
+            <item><description>show in a color picker and let users pick one of the presentations</description></item>
+            </list>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.ServiceConnection.GotoDefinition(LanguageServer.Parameters.TextDocument.TextDocumentPositionParams)">
+            <summary>
+            The goto definition request is sent from the client to the server
+            to resolve the definition location of a symbol at a given text document position.
+            </summary>
+            <remarks>
+            Registration Options: <c>TextDocumentRegistrationOptions</c>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+        </member>
+        <member name="M:LanguageServer.ServiceConnection.GotoTypeDefinition(LanguageServer.Parameters.TextDocument.TextDocumentPositionParams)">
+            <summary>
+            The goto type definition request is sent from the client to the server
+            to resolve the type definition location of a symbol at a given text document position.
+            </summary>
+            <remarks>
+            Registration Options: <c>TextDocumentRegistrationOptions</c>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.ServiceConnection.GotoImplementation(LanguageServer.Parameters.TextDocument.TextDocumentPositionParams)">
+            <summary>
+            The goto implementation request is sent from the client to the server
+            to resolve the implementation location of a symbol at a given text document position.
+            </summary>
+            <remarks>
+            Registration Options: <c>TextDocumentRegistrationOptions</c>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+            <seealso>Spec 3.6.0</seealso>
+        </member>
+        <member name="M:LanguageServer.ServiceConnection.CodeAction(LanguageServer.Parameters.TextDocument.CodeActionParams)">
+            <summary>
+            The code action request is sent from the client to the server
+            to compute commands for a given text document and range.
+            </summary>
+            <remarks>
+            <para>
+            These commands are typically code fixes to either fix problems or to beautify/refactor code.
+            The result of a <c>textDocument/codeAction</c> request is an array of <c>Command</c> literals
+            which are typically presented in the user interface.
+            When the command is selected the server should be contacted again
+            (via the <c>workspace/executeCommand</c> request) to execute the command.
+            </para>
+            <para>
+            <i>Since version 3.8.0:</i> support for CodeAction literals to enable the following scenarios:
+            <list type="bullet">
+            <item><description>
+            the ability to directly return a workspace edit from the code action request.
+            This avoids having another server roundtrip to execute an actual code action.
+            However server providers should be aware that if the code action is expensive
+            to compute or the edits are huge it might still be beneficial if the result is
+            simply a command and the actual edit is only computed when needed.
+            </description></item>
+            <item><description>
+            the ability to group code actions using a kind. Clients are allowed to ignore
+            that information. However it allows them to better group code action for example
+            into corresponding menus (e.g. all refactor code actions into a refactor menu).
+            </description></item>
+            </list>
+            </para>
+            <para>
+            Clients need to announce their support for code action literals and
+            code action kinds via the corresponding client capability
+            <c>textDocument.codeAction.codeActionLiteralSupport</c>.
+            </para>
+            <para>
+            Registration Options: <c>TextDocumentRegistrationOptions</c>
+            </para>
+            </remarks>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso cref="T:LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+            <seealso>Spec 3.8.0</seealso>
+        </member>
+        <member name="M:LanguageServer.ServiceConnection.FoldingRange(LanguageServer.Parameters.TextDocument.FoldingRangeRequestParam)">
+            <summary>
+            The folding range request is sent from the client to the server
+            to return all folding ranges found in a given text document.
+            </summary>
+            <param name="params"></param>
+            <returns></returns>
+            <seealso>Spec 3.10.0</seealso>
+        </member>
+    </members>
+</doc>
