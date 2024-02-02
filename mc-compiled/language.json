@@ -1,5 +1,5 @@
 {
-  "version": 1.15,
+  "version": 1.16,
   "preprocessor_variables": [
     "_compiler",
     "_minecraft",
@@ -13,19 +13,19 @@
     "DUMMIES": {
       "description": "Dummy Entities",
       "details": "Allows the creation of dummy entity behavior/resource files, as well as placing them in the world.",
-      "min-version": 1.1,
+      "min-version": 1.10,
       "value": 1
     },
-    "GAMETEST": {
-      "description": "Gametest Integration",
-      "details": "todo",
-      "min-version": 9999,
+    "AUTOINIT": {
+      "description": "Auto-Initialization",
+      "details": "Runs the initialization file automatically in new worlds, and every time a new build is compiled. Requires a check-function to be run every tick.",
+      "min-version": 1.16,
       "value": 2
     },
     "EXPLODE": {
       "description": "Exploding Entities",
       "details": "Allows the creation of exploder entity behavior/resource files. Allows the use of the explode command by generating presets for the entity.",
-      "min-version": 1.1,
+      "min-version": 1.10,
       "value": 4
     },
     "UNINSTALL": {
@@ -62,6 +62,7 @@
     "cosmetic": "Commands that add visual and auditory appeal to the user's code.",
     "values": "Commands tied directly to values. Values can be used in if-statements, FStrings, and many other places.",
     "logic": "Commands which handle logic and code flow. The butter for all the bread (code).",
+    "debug": "Commands related to testing, debugging and all-around solidifying code.",
     "features": "Commands related to the optionally enable-able features in the language.",
     "other": "The other commands that don't have a good designation."
   },
@@ -166,13 +167,38 @@
       ],
       "attributes": [ "DONT_DECORATE" ]
     },
+    "$append": {
+      "description": "Append to Preprocessor Variable",
+      "details": "Adds the given item(s) to the end of the given preprocessor variable, or contents of another preprocessor variable if specified.",
+      "category": "preprocessor",
+      "function": "_append",
+      "patterns": [
+        [ "id:to modify", "object:items" ],
+        [ "id:to modify", "id:other" ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
+    },
+    "$prepend": {
+      "description": "Prepend to Preprocessor Variable",
+      "details": "Adds the given item(s) to the start of the given preprocessor variable.",
+      "category": "preprocessor",
+      "function": "_prepend",
+      "patterns": [
+        [ "id:to modify", "object:items" ],
+        [ "id:to modify", "id:other" ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
+    },
     "$if": {
       "description": "Preprocessor If",
       "details": "Compares a preprocessor variable and another value/variable. If the source variable contains multiple values, they all must match the condition.",
       "category": "preprocessor",
       "function": "_if",
       "patterns": [
-        [ "id:a", "compare:comparison", "object:b" ]
+        [ "object:a", "compare:comparison", "object:b" ],
+        [ "id:a", "compare:comparison", "object:b" ],
+        [ "object:a", "compare:comparison", "id:b" ],
+        [ "id:a", "compare:comparison", "id:b" ]
       ],
       "attributes": [ "DONT_DECORATE" ]
     },
@@ -182,6 +208,19 @@
       "category": "preprocessor",
       "function": "_else",
       "attributes": [ "DONT_DECORATE" ]
+    },
+    "$assert": {
+      "description": "Preprocessor Assertion",
+      "details": "Asserts that the input comparison is true, and throws a compiler error if not.",
+      "category": "debug",
+      "function": "_assert",
+      "patterns": [
+        [ "object:a", "compare:comparison", "object:b" ],
+        [ "id:a", "compare:comparison", "object:b" ],
+        [ "object:a", "compare:comparison", "id:b" ],
+        [ "id:a", "compare:comparison", "id:b" ]
+      ],
+      "attributes": [ "DONT_FLATTEN_ARRAYS", "DONT_DECORATE" ]
     },
     "$repeat": {
       "description": "Preprocessor Repeat",
@@ -211,7 +250,7 @@
       "patterns": [
         [ "id:name" ]
       ],
-      "attributes": [ "DONT_EXPAND_PPV", "DONT_DECORATE", "DOCUMENTABLE" ]
+      "attributes": [ "DONT_DEREFERENCE", "DONT_DECORATE", "DOCUMENTABLE" ]
     },
     "$include": {
       "description": "Include File",
@@ -303,19 +342,30 @@
       ],
       "attributes": [ "DONT_DECORATE" ]
     },
+    "$unique": {
+      "description": "Preprocessor Array Unique",
+      "details": "Flattens the given preprocessor array to unique values.",
+      "category": "preprocessor",
+      "function": "_unique",
+      "patterns": [
+        [ "id:variable" ]
+      ],
+      "attributes": [ "DONT_DECORATE" ]
+    },
     "$iterate": {
       "description": "Iterate Preprocessor Array",
       "details": "Runs the following statement/code-block once for each value in the given preprocessor variable. The current iteration is held in the preprocessor variable given. If the target is a JSON array, the elements will be iterated upon.",
       "category": "preprocessor",
       "function": "_iterate",
       "patterns": [
-        [ "id:variable", "id:current" ]
+        [ "id:variable", "id:current" ],
+        [ "json:array or object", "id:current"]
       ],
       "attributes": [ "DONT_FLATTEN_ARRAYS", "DONT_DECORATE" ]
     },
     "$len": {
       "description": "Preprocessor Length",
-      "details": "If a preprocessor variable ID is given, the number of elements it holds is gotten. If a JSON array is given, the number of elements is gotten. If a string is given, the number of characters is gotten.",
+      "details": "If a preprocessor variable identifier or JSON array is specified, the number of elements it holds is gotten. If a string is given, its length is gotten.",
       "category": "preprocessor",
       "function": "_len",
       "patterns": [
@@ -390,7 +440,7 @@
       "patterns": [
         [ "*:args" ]
       ],
-      "attributes": [ "DOCUMENTABLE" ]
+      "attributes": [ "DOCUMENTABLE", "DONT_DECORATE" ]
     },
     "init": {
       "description": "Initialize Variable",
@@ -399,7 +449,8 @@
       "category": "values",
       "patterns": [
         [ "value:value" ]
-      ]
+      ],
+      "attributes": [ "DOCUMENTABLE" ]
     },
     "if": {
       "description": "If Statement",
@@ -431,6 +482,39 @@
       "details": "Inverts the comparison given by the previous if-statement at this scope level.",
       "category": "logic",
       "attributes": [ "INVERTS_COMPARISON" ]
+    },
+    "assert": {
+      "description": "Assert Statement",
+      "details": "Asserts that the given condititon evaluates to true, at runtime. If the condition evaluates to false, the code is halted and info is displayed to the executing player(s).",
+      "category": "debug",
+      "patterns": [
+        [ "not:not", "value:boolean" ],
+        [ "value:boolean" ],
+        [ "value:score", "compare:comparison", "value:other" ],
+        [ "value:score", "compare:comparison", "any:other" ],
+        [ "selector:check for match" ],
+        [ "id:count", "selector:entities", "compare:comparison", "value:amount" ],
+        [ "id:count", "selector:entities", "compare:comparison", "number:amount" ],
+        [ "id:any", "selector:filter" ],
+        [ "id:block", "coord:x", "coord:y", "coord:z", "string:block", "?int:data" ],
+        [ "id:blocks", "coord:x1", "coord:y1", "coord:z1", "coord:x2", "coord:y2", "coord:z2", "coord:x destination", "coord:y destination", "coord:z destination" ],
+        [ "not:not", "value:score", "compare:comparison", "value:other" ],
+        [ "not:not", "value:score", "compare:comparison", "any:other" ],
+        [ "not:not", "selector:check for match" ],
+        [ "not:not", "id:count", "selector:entities", "compare:comparison", "value:amount" ],
+        [ "not:not", "id:count", "selector:entities", "compare:comparison", "number:amount" ],
+        [ "not:not", "id:any", "selector:filter" ],
+        [ "not:not", "id:block", "coord:x", "coord:y", "coord:z", "string:block", "?int:data" ],
+        [ "not:not", "id:blocks", "coord:x1", "coord:y1", "coord:z1", "coord:x2", "coord:y2", "coord:z2", "coord:x destination", "coord:y destination", "coord:z destination" ]
+      ]
+    },
+    "throw": {
+      "description": "Throw Error",
+      "details": "Throws an error, displaying it to the executing player(s). The code is halted immediately, so handle cleanup before calling throw. Supports format strings.",
+      "category": "debug",
+      "patterns": [
+        [ "string:error" ]
+      ]
     },
     "give": {
       "description": "Give Item",
@@ -642,6 +726,7 @@
       "patterns": [
         [ "id:create", "string:name", "?string:tag", "?coord:x", "?coord:y", "?coord:x" ],
         [ "id:single", "string:name", "?string:tag", "?coord:x", "?coord:y", "?coord:x" ],
+        [ "id:removeall", "?string:tag" ],
         [ "id:remove", "string:name", "?string:tag" ]
       ]
     },
@@ -660,7 +745,7 @@
       "category": "features",
       "features": 4,
       "patterns": [
-        [ "?coord:x", "?coord:y", "?coord:z", "?int:power", "?int:delay", "?id:causes fire", "?id:breaks blocks" ]
+        [ "?coord:x", "?coord:y", "?coord:z", "?int:power", "?int:delay", "?bool:causes fire", "?bool:breaks blocks" ]
       ]
     },
     "feature": {
@@ -675,10 +760,19 @@
     "function": {
       "description": "Define Function",
       "aliases": [ "fn" ],
-      "details": "Must be followed by a code-block. Parameters must have types, optionally having default values. Function calls look like this: `functionName(parameters)`",
+      "details": "Defines a function. Must be followed by a code-block. Parameters must have types, optionally having default values. Function calls look like this: `functionName(parameters)`",
       "category": "logic",
       "patterns": [
         [ "*:args" ]
+      ],
+      "attributes": [ "DONT_DECORATE", "DOCUMENTABLE" ]
+    },
+    "test": {
+      "description": "Define Test",
+      "details": "Defines a test; requires 'tests' feature. Must be followed by a code-block that contains the test contents.",
+      "category": "debug",
+      "patterns": [
+        [ "id:test name" ]
       ],
       "attributes": [ "DONT_DECORATE", "DOCUMENTABLE" ]
     },
