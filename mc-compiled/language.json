@@ -1,5 +1,5 @@
 {
-  "version": 1.17,
+  "version": 1.18,
   "preprocessor_variables": [
     "_compiler",
     "_minecraft",
@@ -57,7 +57,8 @@
     "enum": "TokenIdentifierEnum",
     "range": "TokenRangeLiteral",
     "json": "TokenJSONLiteral",
-    "not": "TokenNot"
+    "not": "TokenNot",
+    "awaitable": "TokenAwaitable"
   },
   "categories": {
     "preprocessor": "Commands that allow the user to do things at compile time. Preprocessor commands generally start with a `$` and are highlighted differently than regular commands.",
@@ -245,7 +246,7 @@
     },
     "$repeat": {
       "description": "Preprocessor Repeat",
-      "wiki_link": "Compile-Time-Repeating-and-Iteration.md#repeat_number",
+      "wiki_link": "Compile-Time-Loops.md#repeat_number",
       "details": "Repeats the following statement/code-block a number of times. If a variable identifier is given, that variable will be set to the index of the current iteration. 0, 1, 2, etc.",
       "category": "preprocessor",
       "function": "_repeat",
@@ -445,7 +446,7 @@
     "globalprint": {
       "description": "Print to All Players",
       "wiki_link": "Text-Commands.md#commands",
-      "details": "Prints a chat message to all players in the game. Supports format-strings.",
+      "details": "Prints a chat message to all players in the game.",
       "category": "text",
       "patterns": [
         [ "string:text" ]
@@ -455,7 +456,7 @@
     "print": {
       "description": "Print to Player",
       "wiki_link": "Text-Commands.md#commands",
-      "details": "Prints a chat message to the executing player, or to the given one if specified. Supports format-strings.",
+      "details": "Prints a chat message to the executing player, or to the given one if specified.",
       "category": "text",
       "patterns": [
         [ "selector:entity", "string:text" ],
@@ -497,67 +498,45 @@
     "if": {
       "description": "If Statement",
       "wiki_link": "Comparison.md",
-      "details": "Allows comparison of variables, along with a huge collection of other criteria. Can be chained together by the keyword 'and' and inverted by the keyword 'not'. Only runs the proceeding statement/code-block for entities where the condition returns true.",
+      "details": "Performs a comparison, only running the proceeding statement/code-block if the comparisons(s) are true. Multiple comparisons can be chained using the keyword 'and', and comparisons can be inverted using the keyword 'not'",
       "category": "logic",
-      "patterns": [
-        [ "not:not", "value:boolean" ],
-        [ "value:boolean" ],
-        [ "value:score", "compare:comparison", "value:other" ],
-        [ "value:score", "compare:comparison", "any:other" ],
-        [ "selector:check for match" ],
-        [ "id:count", "selector:entities", "compare:comparison", "value:amount" ],
-        [ "id:count", "selector:entities", "compare:comparison", "number:amount" ],
-        [ "id:any", "selector:filter" ],
-        [ "id:block", "coordinate:x", "coordinate:y", "coordinate:z", "string:block", "?int:data" ],
-        [ "id:blocks", "coordinate:x1", "coordinate:y1", "coordinate:z1", "coordinate:x2", "coordinate:y2", "coordinate:z2", "coordinate:x destination", "coordinate:y destination", "coordinate:z destination" ],
-        [ "not:not", "value:score", "compare:comparison", "value:other" ],
-        [ "not:not", "value:score", "compare:comparison", "any:other" ],
-        [ "not:not", "selector:check for match" ],
-        [ "not:not", "id:count", "selector:entities", "compare:comparison", "value:amount" ],
-        [ "not:not", "id:count", "selector:entities", "compare:comparison", "number:amount" ],
-        [ "not:not", "id:any", "selector:filter" ],
-        [ "not:not", "id:block", "coordinate:x", "coordinate:y", "coordinate:z", "string:block", "?int:data" ],
-        [ "not:not", "id:blocks", "coordinate:x1", "coordinate:y1", "coordinate:z1", "coordinate:x2", "coordinate:y2", "coordinate:z2", "coordinate:x destination", "coordinate:y destination", "coordinate:z destination" ]
-      ]
+      "function": "ifStatement"
     },
     "else": {
       "description": "Else Statement",
       "wiki_link": "Comparison.md#else",
       "details": "Inverts the comparison given by the previous if-statement at this scope level.",
       "category": "logic",
+      "function": "elseStatement",
       "attributes": [ "INVERTS_COMPARISON" ]
+    },
+    "while": {
+      "description": "While Statement",
+      "details": "Repeats the proceeding statement/code-block as long as a condition remains true.  Multiple comparisons can be chained using the keyword 'and', and comparisons can be inverted using the keyword 'not'",
+      "category": "logic",
+      "function": "whileLoop"
+    },
+    "repeat": {
+      "description": "Repeat N Times",
+      "details": "Repeats the proceeding statement/code-block the given number of times. This command always runs at runtime.",
+      "category": "logic",
+      "patterns": [
+        [ "int:repetitions", "?id:current" ],
+        [ "value:repetitions", "?id:current" ]
+      ]
     },
     "assert": {
       "description": "Assert Statement",
       "wiki_link": "Testing.md#writing-a-test",
       "details": "Asserts that the given condition evaluates to true, at runtime. If the condition evaluates to false, the code is halted and info is displayed to the executing player(s).",
-      "category": "debug",
-      "patterns": [
-        [ "not:not", "value:boolean" ],
-        [ "value:boolean" ],
-        [ "value:score", "compare:comparison", "value:other" ],
-        [ "value:score", "compare:comparison", "any:other" ],
-        [ "selector:check for match" ],
-        [ "id:count", "selector:entities", "compare:comparison", "value:amount" ],
-        [ "id:count", "selector:entities", "compare:comparison", "number:amount" ],
-        [ "id:any", "selector:filter" ],
-        [ "id:block", "coordinate:x", "coordinate:y", "coordinate:z", "string:block", "?int:data" ],
-        [ "id:blocks", "coordinate:x1", "coordinate:y1", "coordinate:z1", "coordinate:x2", "coordinate:y2", "coordinate:z2", "coordinate:x destination", "coordinate:y destination", "coordinate:z destination" ],
-        [ "not:not", "value:score", "compare:comparison", "value:other" ],
-        [ "not:not", "value:score", "compare:comparison", "any:other" ],
-        [ "not:not", "selector:check for match" ],
-        [ "not:not", "id:count", "selector:entities", "compare:comparison", "value:amount" ],
-        [ "not:not", "id:count", "selector:entities", "compare:comparison", "number:amount" ],
-        [ "not:not", "id:any", "selector:filter" ],
-        [ "not:not", "id:block", "coordinate:x", "coordinate:y", "coordinate:z", "string:block", "?int:data" ],
-        [ "not:not", "id:blocks", "coordinate:x1", "coordinate:y1", "coordinate:z1", "coordinate:x2", "coordinate:y2", "coordinate:z2", "coordinate:x destination", "coordinate:y destination", "coordinate:z destination" ]
-      ]
+      "category": "debug"
     },
     "throw": {
       "description": "Throw Error",
       "wiki_link": "Debugging.md#throwing-errors",
-      "details": "Throws an error, displaying it to the executing player(s). The code is halted immediately, so handle cleanup before calling throw. Supports format-strings.",
+      "details": "Throws an error, displaying it to the executing player(s). The code is halted immediately, so handle cleanup before calling throw.",
       "category": "debug",
+      "function": "throwError",
       "patterns": [
         [ "string:error" ]
       ],
@@ -675,7 +654,7 @@
     "globaltitle": {
       "description": "Show Title to All Players",
       "wiki_link": "Text-Commands.md#commands",
-      "details": "Displays a title on the screen of all players in the game. Can also be used to set the timings of the title. Supports format-strings.",
+      "details": "Displays a title on the screen of all players in the game. Can also be used to set the timings of the title.",
       "category": "text",
       "patterns": [
         [ "id:times", "int:fade in", "int:stay", "int:fade out" ],
@@ -687,7 +666,7 @@
     "title": {
       "description": "Show Title",
       "wiki_link": "Text-Commands.md#commands",
-      "details": "Displays a title on the screen of the executing player, or to the given one if specified. Can also be used to set the timings of the title. Supports format-strings.",
+      "details": "Displays a title on the screen of the executing player, or to the given one if specified. Can also be used to set the timings of the title.",
       "category": "text",
       "patterns": [
         [ "selector:target", "id:times", "int:fade in", "int:stay", "int:fade out" ],
@@ -702,7 +681,7 @@
     "globalactionbar": {
       "description": "Show Actionbar to All Players",
       "wiki_link": "Text-Commands.md#commands",
-      "details": "Displays an actionbar on the screen of all players in the game. Can also be used to set the timings of the actionbar. Supports format-strings.",
+      "details": "Displays an actionbar on the screen of all players in the game. Can also be used to set the timings of the actionbar.",
       "category": "text",
       "patterns": [
         [ "string:text" ]
@@ -712,7 +691,7 @@
     "actionbar": {
       "description": "Show Actionbar",
       "wiki_link": "Text-Commands.md#commands",
-      "details": "Displays an actionbar on the screen of the executing player, or to the given one if specified. Supports format-strings.",
+      "details": "Displays an actionbar on the screen of the executing player, or to the given one if specified.",
       "category": "text",
       "patterns": [
         [ "string:text" ]
@@ -732,6 +711,18 @@
       "wiki_link": "Debugging.md#halting-code",
       "details": "Ends the execution of the code entirely by hitting the function command limit.",
       "category": "logic"
+    },
+    "summon": {
+      "description": "Summon Entity",
+      "details": "Summons an entity; matches Minecraft vanilla syntax.",
+      "category": "entities",
+      "patterns": [
+        [ "id:type" ],
+        [ "id:type", "string:name tag", "?coordinate:x", "?coordinate:y", "?coordinate:z" ],
+        [ "id:type", "coordinate:x", "coordinate:y", "coordinate:z", "coordinate:y rotation", "coordinate:x rotation", "?string:spawn event", "?string:name tag" ],
+        [ "id:type", "coordinate:x", "coordinate:y", "coordinate:z", "id:facing", "selector:entity to face", "?string:spawn event", "?string:name tag" ],
+        [ "id:type", "coordinate:x", "coordinate:y", "coordinate:z", "id:facing", "coordinate:face x", "coordinate:face y", "coordinate:face z", "?string:spawn event", "?string:name tag" ]
+      ]
     },
     "damage": {
       "description": "Damage Entity",
@@ -759,7 +750,7 @@
       "details": "Plays a sound effect in the world, optionally with volume, pitch, and filtering specific players.",
       "category": "cosmetic",
       "patterns": [
-        [ "string:sound", "selector:who", "?coordinate:x", "?coordinate:y", "?coordinate:z", "?number:volume", "?number:pitch", "?number:minimum volume" ]
+        [ "string:sound", "?selector:who", "?coordinate:x", "?coordinate:y", "?coordinate:z", "?number:volume", "?number:pitch", "?number:minimum volume" ]
       ]
     },
     "particle": {
@@ -837,6 +828,7 @@
       "wiki_link": "Functions.md#return-values",
       "details": "Set the value that will be returned from this function when it ends. The caller can use this value however it wishes.",
       "category": "logic",
+      "function": "returnFromFunction",
       "patterns": [
         [ "value:variable" ],
         [ "any:return value" ]
@@ -855,8 +847,10 @@
     },
     "for": {
       "description": "For Each Entity",
+      "wiki_link": "Loops.md#for",
       "details": "Runs the following statement or code-block once over every entity that matches a selector at its current position. Functionally equivalent to `execute as <selector> at @s run <code>`",
       "category": "logic",
+      "function": "forEntities",
       "patterns": [
         [ "selector:entities", "id:at", "coordinate:x", "coordinate:y", "coordinate:z" ],
         [ "selector:entities" ]
@@ -864,11 +858,24 @@
     },
     "execute": {
       "description": "Execute",
-      "details": "Begins a vanilla minecraft 1.19.70+ execute chain. Can be followed by a statement or code-block, but does not explicitly support the 'run' subcommand.",
+      "details": "Begins a vanilla Minecraft execute chain. Can be followed by a statement or code-block, but does not explicitly support the 'run' subcommand.",
       "category": "logic",
       "patterns": [
         [ "id:subcommand", "*:subcommand arguments" ]
       ]
+    },
+    "await": {
+      "description": "Await (async)",
+      "wiki_link": "Async.md#awaiting",
+      "details": "Works in async functions. Awaits a certain amount of time, for a condition to be met, or another async function to complete executing.",
+      "category": "logic",
+      "patterns": [
+        [ "int:ticks" ],
+        [ "id:until", "*:conditions" ],
+        [ "id:while", "*:conditions" ],
+        [ "awaitable:awaitable" ]
+      ],
+      "attributes": [ "CAUSES_ASYNC_SPLIT" ]
     }
   }
 }
